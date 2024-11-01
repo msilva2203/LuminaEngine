@@ -1,6 +1,8 @@
-#pragma once
-
 #include <utility>
+#include <iterator>
+
+#ifndef CORE_ARRAY_H
+#define CORE_ARRAY_H
 
 namespace LM
 {
@@ -8,6 +10,9 @@ namespace LM
     class TArray
     {
         public:
+        using Iterator = T*;
+        using ConstIterator = const T*;
+
         TArray();
         TArray(T Element);
         TArray(T Element, unsigned int Num);
@@ -20,6 +25,37 @@ namespace LM
         bool Remove(unsigned int Index, bool bResize = true);
         T Get(unsigned int Index) const;
         T& GetReference(unsigned int Index);
+        unsigned int Num() const;
+
+        T& operator[](unsigned int Index)
+        {
+            return this->GetReference(Index);
+        }
+        const T& operator[](unsigned int Index) const
+        {
+            return this->GetReference(Index);
+        }
+        TArray<T>& operator=(const TArray<T>& Other)
+        {
+            delete[] this->Buffer;
+            this->Buffer = nullptr;
+            this->Capacity = 0;
+            this->Size = 0;
+
+            if (Other.Size > 0) {
+                this->Init(Other.Buffer[0], Other.Size);
+                for (unsigned int i = 0; i < Other.Size; i++)
+                {
+                    this->Buffer[i] = Other.Buffer[i];
+                }
+            }
+            return *this;
+        }
+
+        Iterator begin() { return this->Buffer; }
+        Iterator end() { return this->Buffer + this->Size; }
+        ConstIterator begin() const { return this->Buffer; }
+        ConstIterator end() const { return this->Buffer + this->Size; }
 
         protected:
 
@@ -144,6 +180,12 @@ namespace LM
     }
 
     template<typename T>
+    unsigned int TArray<T>::Num() const
+    {
+        return this->Size;
+    }
+
+    template<typename T>
     void TArray<T>::Expand()
     {
         if (this->Capacity == 0)
@@ -180,5 +222,6 @@ namespace LM
             delete[] TempBuffer;
         }
     }
-
 }
+
+#endif /* CORE_ARRAY_H */

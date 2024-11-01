@@ -1,11 +1,17 @@
-#pragma once
+#ifndef CORE_APPLICATION_H
+#define CORE_APPLICATION_H
 
-class FApplication
+namespace LM
 {
-    public:
+    class FApplication
+    {
+        public:
+    
+        protected:
+    
+        private:
+    
+    };
+}
 
-    protected:
-
-    private:
-
-};
+#endif /* CORE_APPLICATION_H */

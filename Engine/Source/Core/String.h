@@ -1,11 +1,17 @@
-#pragma once
+#ifndef CORE_STRING_H
+#define CORE_STRING_H
 
-class FString
+namespace LM
 {
-    public:
+    class FString
+    {
+        public:
+    
+        protected:
+    
+        private:
+    
+    };
+}
 
-    protected:
-
-    private:
-
-};
+#endif /* CORE_STRING_H */
