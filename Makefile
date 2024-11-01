@@ -7,6 +7,8 @@ CXXFLAGS += -Wno-error=unused-but-set-variable
 LDFLAGS =
 
 LuminaEngineSRC = \
+		  Engine/Source/Renderer/Renderer.cpp \
+		  Engine/Source/Renderer/Shader.cpp
 
 all: libLuminaEngine.a
 
