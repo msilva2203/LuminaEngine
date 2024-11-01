@@ -1,2 +1,3 @@
-# LuminaEngine
-Lumina Engine is an open source game development engine made in C++
+# Lumina Engine
+
+Welcome to the Lumina Engine source code!
