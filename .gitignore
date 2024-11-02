@@ -27,9 +27,9 @@
 *.lib
 
 # Executables
-*.exe
-*.out
-*.app
+#*.exe
+#*.out
+#*.app
 # Created by https://www.toptal.com/developers/gitignore/api/c++
 # Edit at https://www.toptal.com/developers/gitignore?templates=c++
 
@@ -63,9 +63,9 @@
 *.lib
 
 # Executables
-*.exe
-*.out
-*.app
+#*.exe
+#*.out
+#*.app
 
 # End of https://www.toptal.com/developers/gitignore/api/c++
 
@@ -77,6 +77,8 @@
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
+*.pdb
+*.exp
 
 # Binaries and Intermediate folders
 Binaries/
@@ -84,3 +86,6 @@ Intermediate/
 
 # .vs
 .vs/
+
+# Premake generated files
+Makefile

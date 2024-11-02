@@ -12,9 +12,9 @@
 
 #ifdef LUMINA_PLATFORM_LINUX
     #ifdef LUMINA_CORE
-        #define LUMINA_API __declspec(dllexport)
+        #define LUMINA_API
     #else
-        #define LUMINA_API __declspec(dllimport)
+        #define LUMINA_API
     #endif
 #else
     #define LUMINA_API // Defined so that errors dont appear in other files

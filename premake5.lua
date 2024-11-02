@@ -49,6 +49,12 @@ project "Engine"
             ""
         }
 
+    filter "system:linux"
+        defines
+        {
+            "LUMINA_PLATFORM_LINUX"
+        }
+
     filter "configurations:Debug"
         defines "LUMINA_DEBUG"
         symbols "On"
@@ -101,6 +107,12 @@ project "Sandbox"
         defines
         {
             "LUMINA_PLATFORM_WINDOWS"
+        }
+
+    filter "system:linux"
+        defines
+        {
+            "LUMINA_PLATFORM_LINUX"
         }
 
     filter "configurations:Debug"
