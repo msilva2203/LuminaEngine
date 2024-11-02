@@ -71,3 +71,16 @@
 
 .direnv
 .clangd
+
+# Visual Studio
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# Binaries and Intermediate folders
+Binaries/
+Intermediate/
+
+# .vs
+.vs/
