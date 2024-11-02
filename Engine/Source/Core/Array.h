@@ -1,13 +1,15 @@
-#include <utility>
-#include <iterator>
-
 #ifndef CORE_ARRAY_H
 #define CORE_ARRAY_H
 
-namespace LM
+#include "Core.h"
+
+#include <utility>
+#include <iterator>
+
+namespace Lumina
 {
     template <typename T>
-    class TArray
+    class LUMINA_API TArray
     {
         public:
         using Iterator = T*;

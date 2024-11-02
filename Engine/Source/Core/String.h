@@ -1,9 +1,11 @@
 #ifndef CORE_STRING_H
 #define CORE_STRING_H
 
-namespace LM
+#include "Core.h"
+
+namespace Lumina
 {
-    class FString
+    class LUMINA_API FString
     {
         public:
     
