@@ -7,6 +7,7 @@ extern Lumina::FApplication* Lumina::CreateApplication();
 
 int main(int argc, char** argv)
 {
+    Lumina::Log::Init();
     Lumina::FApplication* App = Lumina::CreateApplication();
     App->Run();
     delete App;
@@ -20,6 +21,7 @@ extern Lumina::FApplication* Lumina::CreateApplication();
 
 int main(int argc, char** argv)
 {
+    Lumina::Log::Init();
     Lumina::FApplication* App = Lumina::CreateApplication();
     App->Run();
     delete App;

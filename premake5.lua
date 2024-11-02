@@ -19,13 +19,14 @@ project "Engine"
 
     files
     {
-        "%{prj.name}/Source/**.h",
-        "%{prj.name}/Source/**.cpp"
+        "%{prj.name}/Source/Lumina/**.h",
+        "%{prj.name}/Source/Lumina/**.cpp"
     }
 
     includedirs
     {
-        "{prj.name}/Source/"
+        "%{prj.name}/Source/Lumina/",
+        "%{prj.name}/Source/ThirdParty/spdlog/include/"
     }
 
     defines
@@ -60,6 +61,12 @@ project "Engine"
         defines "LUMINA_DISTRIBUTION"
         optimize "On"
 
+    buildoptions
+    {
+        "/utf-8",
+        ""
+    }
+
 project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
@@ -82,7 +89,8 @@ project "Sandbox"
     includedirs
     {
         "{prj.name}/Source/",
-        "Engine/Source/"
+        "Engine/Source/Lumina/",
+        "Engine/Source/ThirdParty/spdlog/include"
     }
 
     filter "system:windows"
@@ -106,3 +114,9 @@ project "Sandbox"
     filter "configurations:Distribution"
         defines "LUMINA_DISTRIBUTION"
         optimize "On"
+
+    buildoptions
+    {
+        "/utf-8",
+        ""
+    }

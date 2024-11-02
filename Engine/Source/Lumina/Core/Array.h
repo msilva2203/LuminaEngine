@@ -9,7 +9,7 @@
 namespace Lumina
 {
     template <typename T>
-    class LUMINA_API TArray
+    class TArray
     {
         public:
         using Iterator = T*;
