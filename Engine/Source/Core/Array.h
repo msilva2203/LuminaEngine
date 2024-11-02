@@ -19,13 +19,20 @@ namespace LM
         ~TArray();
 
         void Init(T Element, unsigned int Num);
+        void Clear(bool bDeallocate = true);
         void Add(T Element);
         bool Find(T Element, unsigned int& OutIndex) const;
+        bool FindLast(T Element, unsigned int& OutIndex) const;
+        bool Contains(T Element) const;
         bool Remove(T Element, bool bResize = true);
-        bool Remove(unsigned int Index, bool bResize = true);
-        T Get(unsigned int Index) const;
-        T& GetReference(unsigned int Index);
+        bool RemoveLast(T Element, bool bResize = true);
+        bool RemoveAt(unsigned int Index, bool bResize = true);
+        bool RemoveAll(T Element, bool bResize = true);
+        T& At(unsigned int Index);
+        void SetNum(unsigned int Num);
         unsigned int Num() const;
+        T* GetData() const;
+        bool IsValidIndex(unsigned int Index) const;
 
         T& operator[](unsigned int Index)
         {
@@ -62,6 +69,7 @@ namespace LM
         private:
         void Expand();
         void Shrink();
+        void ReAllocate(unsigned int NewCapacity, bool bForce = false);
 
         T* Buffer;
         unsigned int Capacity;
@@ -117,6 +125,24 @@ namespace LM
     }
 
     template<typename T>
+    void TArray<T>::Clear(bool bDeallocate)
+    {
+        if (bDeallocate) {
+            delete[] this->Buffer;
+            this->Buffer = nullptr;
+            this->Capacity = 0;
+        } else {
+            if (this->Buffer != nullptr) {
+                for (unsigned int i = 0; i < this->Size; i++)
+                {
+                    this->Buffer[i] = 0;
+                }
+            }
+        }
+        this->Size = 0;
+    }
+
+    template<typename T>
     void TArray<T>::Add(T Element)
     {
         if (this->Size >= this->Capacity)
@@ -138,18 +164,48 @@ namespace LM
     }
 
     template<typename T>
-    bool TArray<T>::Remove(T Element, bool bResize)
+    bool TArray<T>::FindLast(T Element, unsigned int& OutIndex) const
     {
-        unsigned int Index;
-        if (this->Find(Element, Index))
+        if (this->Size == 0) return false;
+        for (OutIndex = this->Size - 1; OutIndex >= 0; OutIndex--)
         {
-            return this->Remove(Index, bResize);
+            if (this->Buffer[OutIndex] == Element) {
+                return true;
+            }
         }
         return false;
     }
 
     template<typename T>
-    bool TArray<T>::Remove(unsigned int Index, bool bResize)
+    bool TArray<T>::Contains(T Element) const
+    {
+        unsigned int Index;
+        return Find(Element, Index);
+    }
+
+    template<typename T>
+    bool TArray<T>::Remove(T Element, bool bResize)
+    {
+        unsigned int Index;
+        if (this->Find(Element, Index))
+        {
+            return this->RemoveAt(Index, bResize);
+        }
+        return false;
+    }
+
+    template<typename T>
+    bool TArray<T>::RemoveLast(T Element, bool bResize)
+    {
+        unsigned int Index;
+        if (this->FindLast(Element, Index)) {
+            return this->RemoveAt(Index, bResize);
+        }
+        return false;
+    }
+
+    template<typename T>
+    bool TArray<T>::RemoveAt(unsigned int Index, bool bResize)
     {
         if (Index >= this->Size) return false;
 
@@ -168,15 +224,21 @@ namespace LM
     }
 
     template<typename T>
-    T TArray<T>::Get(unsigned int Index) const
+    bool TArray<T>::RemoveAll(T Element, bool bResize)
+    {
+        // TODO
+    }
+
+    template<typename T>
+    T& TArray<T>::At(unsigned int Index)
     {
         return this->Buffer[Index];
     }
 
     template<typename T>
-    T& TArray<T>::GetReference(unsigned int Index)
+    void TArray<T>::SetNum(unsigned int Num)
     {
-        return this->Buffer[Index];
+        ReAllocate(Num, true);
     }
 
     template<typename T>
@@ -186,22 +248,25 @@ namespace LM
     }
 
     template<typename T>
+    T* TArray<T>::GetData() const
+    {
+        return this->Buffer;
+    }
+
+    template<typename T>
+    bool TArray<T>::IsValidIndex(unsigned int Index) const
+    {
+        return Index < this->Size;
+    }
+
+    template<typename T>
     void TArray<T>::Expand()
     {
         if (this->Capacity == 0)
         {
             this->Capacity = 1;
         }
-        this->Capacity *= 2;
-        T* TempBuffer = this->Buffer;
-        this->Buffer = new T[this->Capacity];
-
-        for (unsigned int i = 0; i < this->Size; i++)
-        {
-            this->Buffer[i] = std::move(TempBuffer[i]);
-        }
-
-        delete[] TempBuffer;
+        ReAllocate(this->Capacity * 2);
     }
 
     template<typename T>
@@ -210,7 +275,18 @@ namespace LM
         if (this->Capacity <= 1) return;
         if (this->Size < this->Capacity / 2)
         {
-            this->Capacity /= 2;
+            ReAllocate(this->Capacity / 2);
+        }
+    }
+
+    template<typename T>
+    void TArray<T>::ReAllocate(unsigned int NewCapacity, bool bForce)
+    {
+        if (NewCapacity > this->Size || bForce) {
+            if (this->Size > NewCapacity) {
+                this->Size = NewCapacity;
+            }
+            this->Capacity = NewCapacity;
             T* TempBuffer = this->Buffer;
             this->Buffer = new T[this->Capacity];
 
