@@ -36,11 +36,11 @@ namespace LM
 
         T& operator[](unsigned int Index)
         {
-            return this->GetReference(Index);
+            return this->At(Index);
         }
         const T& operator[](unsigned int Index) const
         {
-            return this->GetReference(Index);
+            return this->At(Index);
         }
         TArray<T>& operator=(const TArray<T>& Other)
         {
