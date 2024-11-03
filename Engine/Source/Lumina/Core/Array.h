@@ -17,30 +17,30 @@ namespace Lumina {
 
         TArray();
         TArray(T Element);
-        TArray(T Element, unsigned int Num);
+        TArray(T Element, uint32 Num);
         ~TArray();
 
-        void Init(T Element, unsigned int Num);
+        void Init(T Element, uint32 Num);
         void Clear(bool bDeallocate = true);
         void Add(T Element);
-        bool Find(T Element, unsigned int& OutIndex) const;
-        bool FindLast(T Element, unsigned int& OutIndex) const;
+        bool Find(T Element, uint32& OutIndex) const;
+        bool FindLast(T Element, uint32& OutIndex) const;
         bool Contains(T Element) const;
         bool Remove(T Element, bool bResize = true);
         bool RemoveLast(T Element, bool bResize = true);
-        bool RemoveAt(unsigned int Index, bool bResize = true);
+        bool RemoveAt(uint32 Index, bool bResize = true);
         bool RemoveAll(T Element, bool bResize = true);
-        T& At(unsigned int Index);
-        void SetNum(unsigned int Num);
-        unsigned int Num() const;
+        T& At(uint32 Index);
+        void SetNum(uint32 Num);
+        uint32 Num() const;
         T* GetData() const;
-        bool IsValidIndex(unsigned int Index) const;
+        bool IsValidIndex(uint32 Index) const;
 
-        T& operator[](unsigned int Index)
+        T& operator[](uint32 Index)
         {
             return this->At(Index);
         }
-        const T& operator[](unsigned int Index) const
+        const T& operator[](uint32 Index) const
         {
             return this->At(Index);
         }
@@ -53,7 +53,7 @@ namespace Lumina {
 
             if (Other.Size > 0) {
                 this->Init(Other.Buffer[0], Other.Size);
-                for (unsigned int i = 0; i < Other.Size; i++)
+                for (uint32 i = 0; i < Other.Size; i++)
                 {
                     this->Buffer[i] = Other.Buffer[i];
                 }
@@ -71,11 +71,11 @@ namespace Lumina {
     private:
         void Expand();
         void Shrink();
-        void ReAllocate(unsigned int NewCapacity, bool bForce = false);
+        void ReAllocate(uint32 NewCapacity, bool bForce = false);
 
         T* Buffer;
-        unsigned int Capacity;
-        unsigned int Size;
+        uint32 Capacity;
+        uint32 Size;
     };
 
     template<typename T>
@@ -96,7 +96,7 @@ namespace Lumina {
     }
 
     template<typename T>
-    TArray<T>::TArray(T Element, unsigned int Num) :
+    TArray<T>::TArray(T Element, uint32 Num) :
         Buffer(nullptr),
         Capacity(0),
         Size(0)
@@ -111,7 +111,7 @@ namespace Lumina {
     }
 
     template<typename T>
-    void TArray<T>::Init(T Element, unsigned int Num)
+    void TArray<T>::Init(T Element, uint32 Num)
     {
         if (Num == 0) return;
 
@@ -120,7 +120,7 @@ namespace Lumina {
         this->Capacity = Num;
         this->Size = Num;
         this->Buffer = new T[Num];
-        for (unsigned int i = 0; i < Num; i++)
+        for (uint32 i = 0; i < Num; i++)
         {
             this->Buffer[i] = Element;
         }
@@ -135,7 +135,7 @@ namespace Lumina {
             this->Capacity = 0;
         } else {
             if (this->Buffer != nullptr) {
-                for (unsigned int i = 0; i < this->Size; i++)
+                for (uint32 i = 0; i < this->Size; i++)
                 {
                     this->Buffer[i] = 0;
                 }
@@ -156,7 +156,7 @@ namespace Lumina {
     }
 
     template<typename T>
-    bool TArray<T>::Find(T Element, unsigned int& OutIndex) const
+    bool TArray<T>::Find(T Element, uint32& OutIndex) const
     {
         for (OutIndex = 0; OutIndex < this->Size; OutIndex++)
         {
@@ -166,7 +166,7 @@ namespace Lumina {
     }
 
     template<typename T>
-    bool TArray<T>::FindLast(T Element, unsigned int& OutIndex) const
+    bool TArray<T>::FindLast(T Element, uint32& OutIndex) const
     {
         if (this->Size == 0) return false;
         for (OutIndex = this->Size - 1; OutIndex >= 0; OutIndex--)
@@ -181,14 +181,14 @@ namespace Lumina {
     template<typename T>
     bool TArray<T>::Contains(T Element) const
     {
-        unsigned int Index;
+        uint32 Index;
         return Find(Element, Index);
     }
 
     template<typename T>
     bool TArray<T>::Remove(T Element, bool bResize)
     {
-        unsigned int Index;
+        uint32 Index;
         if (this->Find(Element, Index))
         {
             return this->RemoveAt(Index, bResize);
@@ -199,7 +199,7 @@ namespace Lumina {
     template<typename T>
     bool TArray<T>::RemoveLast(T Element, bool bResize)
     {
-        unsigned int Index;
+        uint32 Index;
         if (this->FindLast(Element, Index)) {
             return this->RemoveAt(Index, bResize);
         }
@@ -207,11 +207,11 @@ namespace Lumina {
     }
 
     template<typename T>
-    bool TArray<T>::RemoveAt(unsigned int Index, bool bResize)
+    bool TArray<T>::RemoveAt(uint32 Index, bool bResize)
     {
         if (Index >= this->Size) return false;
 
-        for (unsigned int i = Index; i < this->Size - 1; i++)
+        for (uint32 i = Index; i < this->Size - 1; i++)
         {
             this->Buffer[i] = std::move(this->Buffer[i + 1]);
         }
@@ -232,19 +232,19 @@ namespace Lumina {
     }
 
     template<typename T>
-    T& TArray<T>::At(unsigned int Index)
+    T& TArray<T>::At(uint32 Index)
     {
         return this->Buffer[Index];
     }
 
     template<typename T>
-    void TArray<T>::SetNum(unsigned int Num)
+    void TArray<T>::SetNum(uint32 Num)
     {
         ReAllocate(Num, true);
     }
 
     template<typename T>
-    unsigned int TArray<T>::Num() const
+    uint32 TArray<T>::Num() const
     {
         return this->Size;
     }
@@ -256,7 +256,7 @@ namespace Lumina {
     }
 
     template<typename T>
-    bool TArray<T>::IsValidIndex(unsigned int Index) const
+    bool TArray<T>::IsValidIndex(uint32 Index) const
     {
         return Index < this->Size;
     }
@@ -282,7 +282,7 @@ namespace Lumina {
     }
 
     template<typename T>
-    void TArray<T>::ReAllocate(unsigned int NewCapacity, bool bForce)
+    void TArray<T>::ReAllocate(uint32 NewCapacity, bool bForce)
     {
         if (NewCapacity > this->Size || bForce) {
             if (this->Size > NewCapacity) {
@@ -292,7 +292,7 @@ namespace Lumina {
             T* TempBuffer = this->Buffer;
             this->Buffer = new T[this->Capacity];
 
-            for (unsigned int i = 0; i < this->Size; i++)
+            for (uint32 i = 0; i < this->Size; i++)
             {
                 this->Buffer[i] = std::move(TempBuffer[i]);
             }

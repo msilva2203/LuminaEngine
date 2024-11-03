@@ -15,7 +15,7 @@ namespace Lumina {
 
         virtual void OnBind() {}
         virtual void OnUnbind() {}
-        virtual void OnUpdate(float DeltaTime) {}
+        virtual void OnUpdate(float32 DeltaTime) {}
         virtual void OnRender() {}
 
     protected:

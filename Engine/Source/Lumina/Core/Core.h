@@ -1,6 +1,8 @@
 #ifndef CORE_H
 #define CORE_H
 
+#include "Types.h"
+
 // LUMINA_API definition
 #ifdef LUMINA_PLATFORM_WINDOWS
     #ifdef LUMINA_CORE

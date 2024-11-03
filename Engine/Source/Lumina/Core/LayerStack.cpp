@@ -15,7 +15,7 @@ namespace Lumina {
         }
     }
 
-    void LayerStack::OnUpdate(float DeltaTime)
+    void LayerStack::OnUpdate(float32 DeltaTime)
     {
         for (auto& StackElement : Stack)
         {

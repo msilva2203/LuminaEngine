@@ -13,7 +13,7 @@ namespace Lumina {
         LayerStack();
         ~LayerStack();
 
-        void OnUpdate(float DeltaTime);
+        void OnUpdate(float32 DeltaTime);
         void OnRender();
 
         void PushLayer(Layer* InLayer);
