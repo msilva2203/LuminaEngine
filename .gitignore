@@ -84,8 +84,9 @@
 Binaries/
 Intermediate/
 
-# .vs
+# Editors
 .vs/
+.vscode/
 
 # Premake generated files
 Makefile
