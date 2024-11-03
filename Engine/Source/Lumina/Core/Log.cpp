@@ -2,8 +2,8 @@
 
 #include "spdlog/sinks/stdout_color_sinks.h"
 
-namespace Lumina
-{
+namespace Lumina {
+    
     std::shared_ptr<spdlog::logger> Log::CoreLogger;
     std::shared_ptr<spdlog::logger> Log::ClientLogger;
 

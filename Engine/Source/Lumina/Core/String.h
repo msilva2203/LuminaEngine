@@ -3,17 +3,18 @@
 
 #include "Core.h"
 
-namespace Lumina
-{
+namespace Lumina {
+
     class LUMINA_API FString
     {
-        public:
+    public:
     
-        protected:
+    protected:
     
-        private:
+    private:
     
     };
+
 }
 
 #endif /* CORE_STRING_H */

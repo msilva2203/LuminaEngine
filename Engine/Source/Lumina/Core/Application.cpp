@@ -1,17 +1,38 @@
 #include "Application.h"
 
-namespace Lumina
-{
-    FApplication::FApplication()
+namespace Lumina {
+
+    Application::Application()
     {
     }
 
-    FApplication::~FApplication()
+    Application::~Application()
     {
     }
 
-    void FApplication::Run()
+    void Application::OnInit()
     {
-        while (true);
+        bRunning = true;
     }
+
+    void Application::Run()
+    {
+        OnInit();
+        while (bRunning)
+        {
+            MainLayerStack.OnUpdate(0.0f);
+            MainLayerStack.OnRender();
+        }
+    }
+
+    void Application::PushLayer(Layer* InLayer)
+    {
+        MainLayerStack.PushLayer(InLayer);
+    }
+
+    void Application::PopLayer(Layer* InLayer)
+    {
+        MainLayerStack.PopLayer(InLayer);
+    }
+
 }

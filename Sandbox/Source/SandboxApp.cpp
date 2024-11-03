@@ -3,12 +3,29 @@
 
 using namespace Lumina;
 
-class SandboxApp : public Lumina::FApplication
+class MyLayer : public Lumina::Layer
+{
+public:
+    virtual void OnUpdate(float DeltaTime)
+    {
+        LUMINA_INFO("MyLayer::OnUpdate");
+    }
+
+    virtual void OnRender()
+    {
+        LUMINA_TRACE("MyLayer::OnRender");
+    }
+
+private:
+
+};
+
+class SandboxApp : public Lumina::Application
 {
     public:
     SandboxApp()
     {
-
+        PushLayer(new MyLayer);
     }
 
     ~SandboxApp()
@@ -18,17 +35,7 @@ class SandboxApp : public Lumina::FApplication
 
 };
 
-Lumina::FApplication* Lumina::CreateApplication()
+Lumina::Application* Lumina::CreateApplication()
 {
-    LUMINA_INFO("Application created");
-
-    TArray<int> MyArray;
-    MyArray.Init(7, 10);
-
-    for (const auto& Elem : MyArray)
-    {
-        LUMINA_ERROR("{0}", Elem);
-    }
-
     return new SandboxApp;
 }

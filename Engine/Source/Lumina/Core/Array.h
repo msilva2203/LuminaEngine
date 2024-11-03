@@ -6,12 +6,12 @@
 #include <utility>
 #include <iterator>
 
-namespace Lumina
-{
+namespace Lumina {
+
     template <typename T>
     class TArray
     {
-        public:
+    public:
         using Iterator = T*;
         using ConstIterator = const T*;
 
@@ -66,9 +66,9 @@ namespace Lumina
         ConstIterator begin() const { return this->Buffer; }
         ConstIterator end() const { return this->Buffer + this->Size; }
 
-        protected:
+    protected:
 
-        private:
+    private:
         void Expand();
         void Shrink();
         void ReAllocate(unsigned int NewCapacity, bool bForce = false);
@@ -300,6 +300,7 @@ namespace Lumina
             delete[] TempBuffer;
         }
     }
+    
 }
 
 #endif /* CORE_ARRAY_H */

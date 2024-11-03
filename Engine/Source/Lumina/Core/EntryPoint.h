@@ -3,12 +3,12 @@
 
 #ifdef LUMINA_PLATFORM_WINDOWS
 
-extern Lumina::FApplication* Lumina::CreateApplication();
+extern Lumina::Application* Lumina::CreateApplication();
 
 int main(int argc, char** argv)
 {
     Lumina::Log::Init();
-    Lumina::FApplication* App = Lumina::CreateApplication();
+    Lumina::Application* App = Lumina::CreateApplication();
     App->Run();
     delete App;
 }
@@ -17,12 +17,12 @@ int main(int argc, char** argv)
 
 #ifdef LUMINA_PLATFORM_LINUX
 
-extern Lumina::FApplication* Lumina::CreateApplication();
+extern Lumina::Application* Lumina::CreateApplication();
 
 int main(int argc, char** argv)
 {
     Lumina::Log::Init();
-    Lumina::FApplication* App = Lumina::CreateApplication();
+    Lumina::Application* App = Lumina::CreateApplication();
     App->Run();
     delete App;
 }

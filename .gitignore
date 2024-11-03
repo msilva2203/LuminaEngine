@@ -102,11 +102,11 @@ tags
 
 ### VisualStudioCode ###
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
+.vscode/*.code-snippets
 
 # Local History for Visual Studio Code
 .history/
@@ -513,3 +513,12 @@ FodyWeavers.xsd
 
 .direnv
 .clangd
+
+## Visual Studio
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+### Intermediate files (?)
+*.recipe
+*.FileListAbsolute.txt

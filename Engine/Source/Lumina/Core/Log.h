@@ -6,20 +6,21 @@
 #include <memory>
 #include "spdlog/spdlog.h"
 
-namespace Lumina
-{
+namespace Lumina {
+
     class LUMINA_API Log
     {
-        public:
+    public:
         static void Init();
 
         inline static std::shared_ptr<spdlog::logger>& GetCoreLogger();
         inline static std::shared_ptr<spdlog::logger>& GetClientLogger();
 
-        private:
+    private:
         static std::shared_ptr<spdlog::logger> CoreLogger;
         static std::shared_ptr<spdlog::logger> ClientLogger;
     };
+
 }
 
 #define LUMINA_LOG_FATAL(Log, ...)        Log->fatal(__VA_ARGS__)

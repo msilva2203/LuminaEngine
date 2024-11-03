@@ -57,14 +57,17 @@ project "Engine"
 
     filter "configurations:Debug"
         defines "LUMINA_DEBUG"
+        buildoptions "/MDd"
         symbols "On"
 
     filter "configurations:Release"
         defines "LUMINA_RELEASE"
+        buildoptions "/MD"
         optimize "On"
 
     filter "configurations:Distribution"
         defines "LUMINA_DISTRIBUTION"
+        buildoptions "/MD"
         optimize "On"
 
     buildoptions
@@ -117,14 +120,17 @@ project "Sandbox"
 
     filter "configurations:Debug"
         defines "LUMINA_DEBUG"
+        buildoptions "/MDd"
         symbols "On"
 
     filter "configurations:Release"
         defines "LUMINA_RELEASE"
+        buildoptions "/MD"
         optimize "On"
 
     filter "configurations:Distribution"
         defines "LUMINA_DISTRIBUTION"
+        buildoptions "/MD"
         optimize "On"
 
     buildoptions
