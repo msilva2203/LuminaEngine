@@ -7,6 +7,7 @@
 
 #include "Core/Core.h"
 #include "Core/Object.h"
+#include "Core/Event.h"
 
 #include <string>
 
@@ -27,6 +28,7 @@ namespace Lumina {
         virtual void OnAttach() {}
         virtual void OnDettach() {}
         virtual void OnUpdate(float32 DeltaTime) {}
+        virtual void OnEvent(Event& InEvent) {}
 
     protected:
 
