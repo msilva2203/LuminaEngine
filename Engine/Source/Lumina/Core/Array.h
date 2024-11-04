@@ -1,7 +1,9 @@
+// This code is part of the Lumina Engine and is licensed under MIT License
+
 #ifndef CORE_ARRAY_H
 #define CORE_ARRAY_H
 
-#include "Core.h"
+#include "Core/Core.h"
 
 #include <utility>
 #include <iterator>

@@ -1,3 +1,5 @@
+// This code is part of the Lumina Engine and is licensed under MIT License
+
 #ifndef CORE_LOG_H
 #define CORE_LOG_H
 
@@ -11,6 +13,8 @@ namespace Lumina {
     class LUMINA_API Log
     {
     public:
+        Log() = delete;
+
         static void Init();
 
         inline static std::shared_ptr<spdlog::logger>& GetCoreLogger();

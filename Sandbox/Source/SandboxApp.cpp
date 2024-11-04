@@ -6,14 +6,9 @@ using namespace Lumina;
 class MyLayer : public Lumina::Layer
 {
 public:
-    virtual void OnUpdate(float DeltaTime)
+    virtual void OnUpdate(float DeltaTime) override
     {
-        LUMINA_INFO("MyLayer::OnUpdate");
-    }
-
-    virtual void OnRender()
-    {
-        LUMINA_TRACE("MyLayer::OnRender");
+        LUMINA_INFO("MyLayer::OnUpdate({0})", DeltaTime);
     }
 
 private:

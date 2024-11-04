@@ -1,9 +1,13 @@
+// This code is part of the Lumina Engine and is licensed under MIT License
+
 #ifndef CORE_H
 #define CORE_H
 
-#include "Types.h"
+#pragma once
 
-// LUMINA_API definition
+#include "Types.h" // To be included in every core file
+
+// Windows LUMINA_API definition
 #ifdef LUMINA_PLATFORM_WINDOWS
     #ifdef LUMINA_CORE
         #define LUMINA_API __declspec(dllexport)
@@ -12,6 +16,7 @@
     #endif
 #else
 
+// Linux LUMINA_API definition
 #ifdef LUMINA_PLATFORM_LINUX
     #ifdef LUMINA_CORE
         #define LUMINA_API
@@ -19,10 +24,24 @@
         #define LUMINA_API
     #endif
 #else
-    #define LUMINA_API // Defined so that errors dont appear in other files
-    #error Unavailable platform
+
+// Unsupported platform
+#define LUMINA_API // Defined so that errors dont appear in other files
+#error Unavailable platforms
 #endif
 
 #endif
+
+namespace Lumina {
+
+    class LUMINA_API Core
+    {
+    public:
+        Core() = delete;
+
+        static void Init();
+    };
+
+}
 
 #endif /* CORE_H */

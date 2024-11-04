@@ -1,8 +1,12 @@
+// This code is part of the Lumina Engine and is licensed under MIT License
+
 #ifndef CORE_APPLICATION_H
 #define CORE_APPLICATION_H
 
-#include "Core.h"
-#include "LayerStack.h"
+#pragma once
+
+#include "Core/Core.h"
+#include "Core/LayerStack.h"
 
 namespace Lumina {
 
@@ -22,6 +26,7 @@ namespace Lumina {
     
     private:
         bool bRunning;
+        float32 LastFrameTime;
         LayerStack MainLayerStack;
     
     };

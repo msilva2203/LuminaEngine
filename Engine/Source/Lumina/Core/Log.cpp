@@ -1,3 +1,5 @@
+// This code is part of the Lumina Engine and is licensed under MIT License
+
 #include "Log.h"
 
 #include "spdlog/sinks/stdout_color_sinks.h"
