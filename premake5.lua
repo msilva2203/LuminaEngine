@@ -57,18 +57,34 @@ project "Engine"
 
     filter "configurations:Debug"
         defines "LUMINA_DEBUG"
-        buildoptions "/MDd"
         symbols "On"
 
     filter "configurations:Release"
         defines "LUMINA_RELEASE"
-        buildoptions "/MD"
         optimize "On"
 
     filter "configurations:Distribution"
         defines "LUMINA_DISTRIBUTION"
-        buildoptions "/MD"
         optimize "On"
+
+    filter
+    {
+        "system:windows",
+        "configurations:Debug"
+    }
+        buildoptions "/MDd"
+    filter
+    {
+        "system:windows",
+        "configurations:Release"
+    }
+        buildoptions "/MD"
+    filter
+    {
+        "system:windows",
+        "configurations:Distribution"
+    }
+        buildoptions "MD"
 
     buildoptions
     {
@@ -132,6 +148,25 @@ project "Sandbox"
         defines "LUMINA_DISTRIBUTION"
         buildoptions "/MD"
         optimize "On"
+
+    filter
+    {
+        "system:windows",
+        "configurations:Debug"
+    }
+        buildoptions "/MDd"
+    filter
+    {
+        "system:windows",
+        "configurations:Release"
+    }
+        buildoptions "/MD"
+    filter
+    {
+        "system:windows",
+        "configurations:Distribution"
+    }
+        buildoptions "MD"
 
     buildoptions
     {
