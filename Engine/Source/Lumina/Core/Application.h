@@ -7,6 +7,7 @@
 
 #include "Core/Core.h"
 #include "Core/LayerStack.h"
+#include "Core/Window.h"
 
 namespace Lumina {
 
@@ -36,6 +37,7 @@ namespace Lumina {
         bool bRunning;
         float32 LastFrameTime;
         LayerStack MainLayerStack;
+        Window* AppWindow;
     
     };
 
