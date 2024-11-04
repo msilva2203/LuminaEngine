@@ -34,6 +34,9 @@
 
 namespace Lumina {
 
+    /**
+     * Allows the initialization of the Lumina Core
+     */
     class LUMINA_API Core
     {
     public:

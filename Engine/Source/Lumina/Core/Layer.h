@@ -12,6 +12,12 @@
 
 namespace Lumina {
 
+    /**
+     * Allows the user to create application layers
+     * 
+     * Layers can be used as subsystems, possibly isolated from the rest
+     * of the application
+     */
     class LUMINA_API Layer : public Object
     {
     public:

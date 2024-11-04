@@ -11,6 +11,11 @@
 
 namespace Lumina {
 
+    /**
+     * Allows the user to create an integrated object
+     * 
+     * The base class itself is more useful for just debug purposes
+     */
     class LUMINA_API Object
     {
     public:

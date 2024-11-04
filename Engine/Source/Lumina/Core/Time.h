@@ -11,6 +11,9 @@
 
 namespace Lumina {
 
+    /**
+     * Allows the user to access time related properties
+     */
     class LUMINA_API Time
     {
     public:

@@ -11,6 +11,12 @@
 
 namespace Lumina {
 
+    /**
+     * Allows the user to create a stack of layers
+     * 
+     * Mainly used in the Lumina runtime, not having a lot of uses outside
+     * of it (example: game application)
+     */
     class LUMINA_API LayerStack
     {
     public:

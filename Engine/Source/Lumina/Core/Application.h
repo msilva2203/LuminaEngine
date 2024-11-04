@@ -10,6 +10,14 @@
 
 namespace Lumina {
 
+    /**
+     * Allows the user to create a Lumina application
+     * 
+     * Defines the behaviour of a base Lumina application
+     * 
+     * To be derived and implemented in each new application using the Lumina
+     * runtime, including the Editor or other development tools
+     */
     class LUMINA_API Application
     {
     public:
