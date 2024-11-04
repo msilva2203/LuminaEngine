@@ -5,23 +5,44 @@
 
 #pragma once
 
-#include "Types.h" // To be included in every core file
+#include "Types.h" // To be included in every file
 
-// Windows LUMINA_API definition
+// Windows specific defines
 #ifdef LUMINA_PLATFORM_WINDOWS
+    // LUMINA API definition
     #ifdef LUMINA_CORE
         #define LUMINA_API __declspec(dllexport)
     #else
         #define LUMINA_API __declspec(dllimport)
     #endif
+
+    // Lumina assertion
+    #ifndef LUMINA_DISTRIBUTION
+        #define LUMINA_CORE_ASSERT(x, ...) {if (!(x)) {LUMINA_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}
+        #define LUMINA_ASSERT(x, ...)      {if (!(x)) {LUMINA_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak();}}
+    #else
+        #define LUMINA_CORE_ASSERT(x, ...)
+        #define LUMINA_ASSERT(x, ...)
+    #endif
 #else
 
-// Linux LUMINA_API definition
+// Linux
 #ifdef LUMINA_PLATFORM_LINUX
+    // LUMINA API definition
     #ifdef LUMINA_CORE
         #define LUMINA_API
     #else
         #define LUMINA_API
+    #endif
+
+    // Lumina assertion
+    #ifndef LUMINA_DISTRIBUTION
+        #include <signal>
+        #define LUMINA_CORE_ASSERT(x, ...) {if (!(x)) {LUMINA_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); raise(SIGTRAP)}}
+        #define LUMINA_ASSERT(x, ...)      {if (!(x)) {LUMINA_ERROR("Assertion Failed: {0}", __VA_ARGS__); raise(SIGTRAP)}}
+    #else
+        #define LUMINA_CORE_ASSERT(x, ...)
+        #define LUMINA_ASSERT(x, ...)
     #endif
 #else
 
