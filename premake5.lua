@@ -7,7 +7,15 @@ workspace "Lumina"
         "Distribution"
     }
 
+-- the general output directory for each project
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+
+-- include directories
+include_dirs = {}
+include_dirs["glfw"] = "Engine/Source/ThirdParty/glfw/include"
+
+-- premake includes
+include "Engine/Source/ThirdParty/glfw"
 
 project "Engine"
     location "Engine"
@@ -26,7 +34,14 @@ project "Engine"
     includedirs
     {
         "%{prj.name}/Source/Lumina/",
-        "%{prj.name}/Source/ThirdParty/spdlog/include/"
+        "%{prj.name}/Source/ThirdParty/spdlog/include/",
+        "%{include_dirs.glfw}"
+    }
+
+    links
+    {
+        "glfw",
+        "opengl32.lib"
     }
 
     defines
@@ -84,12 +99,11 @@ project "Engine"
         "system:windows",
         "configurations:Distribution"
     }
-        buildoptions "MD"
+        buildoptions "/MD"
 
     buildoptions
     {
-        "/utf-8",
-        ""
+        "/utf-8"
     }
 
 project "Sandbox"
@@ -113,9 +127,10 @@ project "Sandbox"
 
     includedirs
     {
-        "{prj.name}/Source/",
+        "%{prj.name}/Source/",
         "Engine/Source/Lumina/",
-        "Engine/Source/ThirdParty/spdlog/include"
+        "Engine/Source/ThirdParty/spdlog/include",
+        "%{include_dirs.glfw}"
     }
 
     filter "system:windows"
@@ -163,10 +178,9 @@ project "Sandbox"
         "system:windows",
         "configurations:Distribution"
     }
-        buildoptions "MD"
+        buildoptions "/MD"
 
     buildoptions
     {
-        "/utf-8",
-        ""
+        "/utf-8"
     }
