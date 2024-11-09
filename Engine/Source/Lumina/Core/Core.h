@@ -7,7 +7,9 @@
 
 #include "Types.h" // To be included in every file
 
-// Windows specific defines
+/*------------------------------------------------
+    Windows
+-------------------------------------------------*/
 #ifdef LUMINA_PLATFORM_WINDOWS
     // LUMINA API definition
     #ifdef LUMINA_CORE
@@ -20,7 +22,9 @@
     #define DEBUGBREAK() __debugbreak()
 #else
 
-// Linux
+/*------------------------------------------------
+    Linux
+-------------------------------------------------*/
 #ifdef LUMINA_PLATFORM_LINUX
     // LUMINA API definition
     #ifdef LUMINA_CORE

@@ -112,6 +112,11 @@ namespace Lumina {
         delete[] this->Buffer;
     }
 
+    /**
+     * Initializes the array with a specified number of elements, each initialized to the specified value
+     * @param Element The element that the array will be filled with
+     * @param Num The number of elements
+     */
     template<typename T>
     void TArray<T>::Init(T Element, uint32 Num)
     {
@@ -128,6 +133,10 @@ namespace Lumina {
         }
     }
 
+    /**
+     * Resets the array to an empty state, with an option to release allocated memory
+     * @param bDeallocate Deallocate or not memory used in array
+     */
     template<typename T>
     void TArray<T>::Clear(bool bDeallocate)
     {
@@ -146,6 +155,10 @@ namespace Lumina {
         this->Size = 0;
     }
 
+    /**
+     * Add a new element to the array, allocating more memory if needed
+     * @param Element Element to add to the array
+     */
     template<typename T>
     void TArray<T>::Add(T Element)
     {
@@ -157,6 +170,12 @@ namespace Lumina {
         this->Size++;
     }
 
+    /**
+     * Finds the index of the first occurrence of an element in the array
+     * @param Element The element to search for
+     * @param OutIndex Reference of the returned index
+     * @returns True if the element was found, false otherwise
+     */
     template<typename T>
     bool TArray<T>::Find(T Element, uint32& OutIndex) const
     {
@@ -167,6 +186,12 @@ namespace Lumina {
         return false;
     }
 
+    /**
+     * Finds the index of the last occurrence of an element in the array
+     * @param Element The element to search for
+     * @param OutIndex Reference of the returned index
+     * @returns True if the element was found, false otherwise
+     */
     template<typename T>
     bool TArray<T>::FindLast(T Element, uint32& OutIndex) const
     {
@@ -180,6 +205,11 @@ namespace Lumina {
         return false;
     }
 
+    /**
+     * Check if element is present in the array
+     * @param Element The element to check
+     * @returns True if the array contains the element, false otherwise
+     */
     template<typename T>
     bool TArray<T>::Contains(T Element) const
     {
@@ -187,6 +217,12 @@ namespace Lumina {
         return Find(Element, Index);
     }
 
+    /**
+     * Removes the first ocurrence of an element in the array
+     * @param Element The element to remove from the array
+     * @param bResize Specifies if the array should be resize when possible
+     * @returns True if an element was removed, false otherwise
+     */
     template<typename T>
     bool TArray<T>::Remove(T Element, bool bResize)
     {
@@ -198,6 +234,12 @@ namespace Lumina {
         return false;
     }
 
+    /**
+     * Removes the last ocurrence of an element in the array
+     * @param Element The element to remove from the array
+     * @param bResize Specifies if the array should be resize when possible
+     * @returns True if an element was removed, false otherwise
+     */
     template<typename T>
     bool TArray<T>::RemoveLast(T Element, bool bResize)
     {
@@ -208,6 +250,12 @@ namespace Lumina {
         return false;
     }
 
+    /**
+     * Removes the element of the array at the specified index
+     * @param Index The index of the element to remove from the array
+     * @param bResize Specifies if the array should be resize when possible
+     * @returns True if an element was removed, false otherwise
+     */
     template<typename T>
     bool TArray<T>::RemoveAt(uint32 Index, bool bResize)
     {
@@ -227,36 +275,64 @@ namespace Lumina {
         return true;
     }
 
+    /**
+     * Removes all ocurrences of an element from the array
+     * @param Element The element to remove from the array
+     * @param bResize Specifies if the array should be resize when possible
+     * @returns True if an element was removed, false otherwise
+     */
     template<typename T>
     bool TArray<T>::RemoveAll(T Element, bool bResize)
     {
-        // TODO
+        // TODO: Define the function RemoveAll(...)
     }
 
+    /**
+     * Get the reference to the element from the array at specified index
+     * @param Index The index of the element
+     * @returns The reference to the element
+     */
     template<typename T>
     T& TArray<T>::At(uint32 Index)
     {
         return this->Buffer[Index];
     }
 
+    /**
+     * Set the size of the array, stripping or filling the array according to the new size
+     * @param Num The new size of the array
+     */
     template<typename T>
     void TArray<T>::SetNum(uint32 Num)
     {
         ReAllocate(Num, true);
     }
 
+    /**
+     * Get the number of elements in the array
+     * @returns The number of elements
+     */
     template<typename T>
     uint32 TArray<T>::Num() const
     {
         return this->Size;
     }
 
+    /**
+     * Get the raw pointer to the data in the array
+     * @returns Pointer to the data
+     */
     template<typename T>
     T* TArray<T>::GetData() const
     {
         return this->Buffer;
     }
 
+    /**
+     * Validate if the specified index is in bounds of the size of the array
+     * @param Index The index to validate
+     * @returns True if the index is valid, false otherwise
+     */
     template<typename T>
     bool TArray<T>::IsValidIndex(uint32 Index) const
     {

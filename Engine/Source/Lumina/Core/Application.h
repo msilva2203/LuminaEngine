@@ -12,8 +12,6 @@
 namespace Lumina {
 
     /**
-     * Allows the user to create a Lumina application
-     * 
      * Defines the behaviour of a base Lumina application
      * 
      * To be derived and implemented in each new application using the Lumina
@@ -30,6 +28,10 @@ namespace Lumina {
 
         void PushLayer(Layer* InLayer);
         void PopLayer(Layer* InLayer);
+
+        static Application* GetInstance();
+
+        static Application* Instance;
     
     protected:
     

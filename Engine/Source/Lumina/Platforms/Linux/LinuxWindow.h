@@ -3,10 +3,10 @@
 
 #pragma once
 
-#ifdef LUMINA_PLATFORM_LINUX
-
 #include "Core/Core.h"
 #include "Core/Window.h"
+
+#ifdef LUMINA_PLATFORM_LINUX
 
 namespace Lumina {
 

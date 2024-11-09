@@ -1,5 +1,7 @@
 #include "WinWindow.h"
 
+#include "Core/Log.h"
+
 #ifdef LUMINA_PLATFORM_WINDOWS
 
 namespace Lumina {
@@ -29,10 +31,15 @@ namespace Lumina {
 
     void WinWindow::Init()
     {
+        LUMINA_CORE_INFO("Initializing window...");
+
+        // Run GLFW initialization code only for the first time
         if (!bInitialized) {
             // TODO: Initialize GLFW here
             bInitialized = true;
         }
+
+        LUMINA_CORE_INFO("Window initialized");
     }
 
     void WinWindow::Shutdown()

@@ -2,32 +2,59 @@
 
 #include "Application.h"
 
+#include "Core/Log.h"
 #include "Core/Time.h"
 
 namespace Lumina {
 
-    Application::Application()
-    {
-        FWindowSettings WindowSettings;
-        WindowSettings.Title = "Lumina Window";
-        WindowSettings.Width = 1280;
-        WindowSettings.Height = 720;
-        WindowSettings.bVSyncEnabled = false;
+    // The singleton instance of application
+    Application* Application::Instance = nullptr;
 
-        AppWindow = Window::Create(WindowSettings);
+    /**
+     * Constructs a base application, initializing it's member variables
+     */
+    Application::Application() :
+        bRunning(false),
+        LastFrameTime(0.0f),
+        MainLayerStack(LayerStack()),
+        AppWindow(nullptr)
+    {
     }
 
+    /**
+     * Destructs a base application, releasing any used memory
+     */
     Application::~Application()
     {
         delete AppWindow;
     }
 
+    /**
+     * Initializes the overall state of the application
+     */
     void Application::OnInit()
     {
-        bRunning = true;
-        LastFrameTime = 0.0f;
+        LUMINA_CORE_INFO("Initializing application...");
+        LUMINA_CORE_ASSERT(GetInstance() == nullptr, "An application instance is already initialized");
+        Instance = this; // Sets the current instance of application to this object
+
+        // Creates a window
+        FWindowSettings WindowSettings;
+        WindowSettings.Title = "Lumina Window";
+        WindowSettings.Width = 1280;
+        WindowSettings.Height = 720;
+        WindowSettings.bVSyncEnabled = false;
+        AppWindow = Window::Create(WindowSettings);
+
+        this->bRunning = true;
+        this->LastFrameTime = 0.0f;
+
+        LUMINA_CORE_INFO("Application initialized");
     }
 
+    /**
+     * Runs the application, serving as the main loop of the program
+     */
     void Application::Run()
     {
         OnInit();
@@ -35,29 +62,46 @@ namespace Lumina {
         while (bRunning)
         {
             float32 CurrentTime = Time::GetElapsedSeconds();
-            float32 DeltaTime = CurrentTime - LastFrameTime;
+            float32 DeltaTime = CurrentTime - this->LastFrameTime;
 
             // Update layers in layer stack
-            for (auto& StackLayer : MainLayerStack)
+            for (auto& CurrentLayer : this->MainLayerStack)
             {
-                StackLayer->OnUpdate(DeltaTime);
+                CurrentLayer->OnUpdate(DeltaTime);
             }
 
             // Update window
-            AppWindow->OnUpdate();
+            this->AppWindow->OnUpdate();
 
-            LastFrameTime = CurrentTime;
+            this->LastFrameTime = CurrentTime;
         }
     }
 
+    /**
+     * Pushes a new layer to the main layer stack
+     * @param InLayer The layer to push
+     */
     void Application::PushLayer(Layer* InLayer)
     {
-        MainLayerStack.PushLayer(InLayer);
+        this->MainLayerStack.PushLayer(InLayer);
     }
 
+    /**
+     * Pops a layer from the layer stack
+     * @param InLayer The layer to pop
+     */
     void Application::PopLayer(Layer* InLayer)
     {
-        MainLayerStack.PopLayer(InLayer);
+        this->MainLayerStack.PopLayer(InLayer);
+    }
+
+    /**
+     * Get the singleton instance of current application
+     * @returns The pointer to current application
+     */
+    Application* Application::GetInstance()
+    {
+        return Instance;
     }
 
 }
