@@ -30,26 +30,28 @@ namespace Lumina {
      */
     enum EEventCategory : uint8
     {
-        None = 0,
-        ApplicationEvent   = 1 << 0,
-        InputEvent         = 1 << 1,
-        KeyboardEvent      = 1 << 2,
-        MouseEvent         = 1 << 3,
-        MouseButtonEvent   = 1 << 4
+        CategoryNone = 0,
+        CategoryApplicationEvent   = 1 << 0,
+        CategoryInputEvent         = 1 << 1,
+        CategoryKeyboardEvent      = 1 << 2,
+        CategoryMouseEvent         = 1 << 3,
+        CategoryMouseButtonEvent   = 1 << 4
     };
 
     class LUMINA_API Event
     {
+        friend class EventDispatcher;
     public:
         virtual EEventType GetEventType() const = 0;
         virtual int32 GetEventCategoryFlags() const = 0;
+        virtual const char* GetName() const = 0;
 
         inline bool IsInCategory(EEventCategory Category)
         {
             return this->GetEventCategoryFlags() & Category;
         }
 
-        virtual const std::string& ToString() const = 0;
+        virtual std::string ToString() const { return GetName(); }
 
     protected:
 
@@ -69,6 +71,14 @@ namespace Lumina {
     };
 
 }
+
+#define DECLARE_EVENT_TYPE(Type) \
+    EEventType GetStaticEventType() { return EEventType::##Type; }
+    virtual EEventType GetEventType() const override { return GetStaticEventType(); } \
+    virtual const char* GetName() const override { return #Type; } \
+
+#define DECLARE_EVENT_CATEGORY(CategoryFlags) \
+    virtual int32 GetEventCategoryFlags() const override { return CategoryFlags; } \
 
 #define BIND_EVENT(Function, Object) std::bind(&Function, Object, std::placeholders::_1)
 
