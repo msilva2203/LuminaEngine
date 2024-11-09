@@ -285,6 +285,7 @@ namespace Lumina {
     bool TArray<T>::RemoveAll(T Element, bool bResize)
     {
         // TODO: Define the function RemoveAll(...)
+        return false;
     }
 
     /**

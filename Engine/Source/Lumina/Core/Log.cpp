@@ -20,14 +20,4 @@ namespace Lumina {
         ClientLogger->set_level(spdlog::level::trace);
     }
 
-    std::shared_ptr<spdlog::logger>& Log::GetCoreLogger()
-    {
-        return CoreLogger;
-    }
-
-    std::shared_ptr<spdlog::logger>& Log::GetClientLogger()
-    {
-        return ClientLogger;
-    }
-
 }

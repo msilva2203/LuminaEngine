@@ -33,7 +33,7 @@ namespace Lumina {
     {
         LUMINA_CORE_INFO("Initializing window...");
 
-        // Run GLFW initialization code only for the first time
+        // Run GLFW initialization code only if needed
         if (WindowInstances <= 0) {
             int32 Success = glfwInit();
             LUMINA_CORE_ASSERT(Success == GLFW_TRUE, "GLFW failed to initialize");
@@ -65,8 +65,6 @@ namespace Lumina {
 
     void WinWindow::OnUpdate()
     {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glfwSwapBuffers(WindowPtr);
         glfwPollEvents();
     }

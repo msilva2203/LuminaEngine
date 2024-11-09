@@ -11,24 +11,36 @@
     Windows
 -------------------------------------------------*/
 #ifdef LUMINA_PLATFORM_WINDOWS
+    #define VALID_PLATFORM
+
     // LUMINA API definition
-    #ifdef LUMINA_CORE
-        #define LUMINA_API __declspec(dllexport)
+    #ifdef LUMINA_BUILD_DLL
+        #ifdef LUMINA_CORE
+            #define LUMINA_API __declspec(dllexport)
+        #else
+            #define LUMINA_API __declspec(dllimport)
+        #endif
     #else
-        #define LUMINA_API __declspec(dllimport)
+        #define LUMINA_API
     #endif
 
     // Defines DEBUGBREAK for later assertion macros
-    #define DEBUGBREAK() __debugbreak()
-#else
+    #define DEBUGBREAK __debugbreak()
+#endif
 
 /*------------------------------------------------
     Linux
 -------------------------------------------------*/
 #ifdef LUMINA_PLATFORM_LINUX
+    #define VALID_PLATFORM
+
     // LUMINA API definition
-    #ifdef LUMINA_CORE
-        #define LUMINA_API
+    #ifdef LUMINA_BUILD_DLL
+        #ifdef LUMINA_CORE
+            #define LUMINA_API
+        #else
+            #define LUMINA_API
+        #endif
     #else
         #define LUMINA_API
     #endif
@@ -36,25 +48,24 @@
     // Defines DEBUGBREAK for later assertion macros
     //#include <signal>
     //#define DEBUGBREAK() raise(SIGTRAP)
-#else
-
-// Unsupported platform
-#define LUMINA_API // Defined so that errors dont appear in other files
-#error Unavailable platforms
 #endif
 
+// Unsupported platform
+#ifndef VALID_PLATFORM
+    #define LUMINA_API // Defined so that errors dont appear in other files
+    #error Unavailable platforms
 #endif
 
 // Lumina assertion
 #ifndef LUMINA_DISTRIBUTION
     // Define DEBUGBREAK if not already defined
-    #ifndef DEBUGBREAK()
-        #define DEBUGBREAK()
+    #ifndef DEBUGBREAK
+        #define DEBUGBREAK
     #endif
 
     // Define assertion macros
-    #define LUMINA_CORE_ASSERT(x, ...) {if (!(x)) {LUMINA_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); DEBUGBREAK();}}
-    #define LUMINA_ASSERT(x, ...)      {if (!(x)) {LUMINA_ERROR("Assertion Failed: {0}", __VA_ARGS__); DEBUGBREAK();}}
+    #define LUMINA_CORE_ASSERT(x, ...) {if (!(x)) {LUMINA_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); DEBUGBREAK;}}
+    #define LUMINA_ASSERT(x, ...)      {if (!(x)) {LUMINA_ERROR("Assertion Failed: {0}", __VA_ARGS__); DEBUGBREAK;}}
 #else
     // Strip assertion from distribution builds
     #define LUMINA_CORE_ASSERT(x, ...)

@@ -5,6 +5,8 @@
 #include "Core/Log.h"
 #include "Core/Time.h"
 
+#include "GLFW/glfw3.h"
+
 namespace Lumina {
 
     // The singleton instance of application
@@ -69,6 +71,10 @@ namespace Lumina {
             {
                 CurrentLayer->OnUpdate(DeltaTime);
             }
+
+            // Rendering
+            glClear(GL_COLOR_BUFFER_BIT);
+            glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 
             // Update window
             this->AppWindow->OnUpdate();

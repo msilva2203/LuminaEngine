@@ -3,6 +3,8 @@
 #ifndef CORE_LOG_H
 #define CORE_LOG_H
 
+#pragma once
+
 #include "Core.h"
 
 #include <memory>
@@ -17,8 +19,8 @@ namespace Lumina {
 
         static void Init();
 
-        inline static std::shared_ptr<spdlog::logger>& GetCoreLogger();
-        inline static std::shared_ptr<spdlog::logger>& GetClientLogger();
+        inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return CoreLogger; }
+        inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return ClientLogger; }
 
     private:
         static std::shared_ptr<spdlog::logger> CoreLogger;
