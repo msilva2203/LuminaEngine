@@ -69,11 +69,26 @@ namespace Lumina {
 
     class LUMINA_API EventDispatcher
     {
+        template <typename T>
+        using EventFunction = std::function<bool(T&)>;
     public:
+        EventDispatcher(Event& InEvent) :
+            EventToDispatch(InEvent)
+        {}
 
-    protected:
+        template <typename T>
+        bool Dispatch(EventFunction<T> Function)
+        {
+            if (T::GetStaticEventType() == EventToDispatch.GetEventType())
+            {
+                EventToDispatch.bHandled = Function(*(T*)&EventToDispatch);
+                return true;
+            }
+            return false;
+        }
 
     private:
+        Event& EventToDispatch;
 
     };
 

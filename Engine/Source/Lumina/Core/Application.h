@@ -8,6 +8,9 @@
 #include "Core/Core.h"
 #include "Core/LayerStack.h"
 #include "Core/Window.h"
+#include "Core/Events/ApplicationEvents.h"
+#include "Core/Events/KeyEvents.h"
+#include "Core/Events/MouseEvents.h"
 
 namespace Lumina {
 
@@ -25,7 +28,7 @@ namespace Lumina {
 
         void OnInit();
         void Run();
-        void OnEvent(Event& ReceivedEvent);
+        void OnEvent(Event& InEvent);
 
         void PushLayer(Layer* InLayer);
         void PopLayer(Layer* InLayer);
@@ -37,6 +40,8 @@ namespace Lumina {
     protected:
     
     private:
+        bool OnWindowClose(WindowCloseEvent& InEvent);
+
         bool bRunning;
         float32 LastFrameTime;
         LayerStack MainLayerStack;

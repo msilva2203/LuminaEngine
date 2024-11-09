@@ -92,11 +92,14 @@ namespace Lumina {
 
     /**
      * Handles events received from various sources
-     * @param ReceivedEvent The event received
+     * @param InEvent The event received
      */
-    void Application::OnEvent(Event& ReceivedEvent)
+    void Application::OnEvent(Event& InEvent)
     {
-        LUMINA_CORE_TRACE("{0}", ReceivedEvent.ToString());
+        LUMINA_CORE_TRACE("{0}", InEvent.ToString());
+
+        EventDispatcher Dispatcher(InEvent);
+        Dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT(Application::OnWindowClose, this));
     }
 
     /**
@@ -124,6 +127,16 @@ namespace Lumina {
     Application* Application::GetInstance()
     {
         return Instance;
+    }
+
+    /**
+     * Callback from the window close event
+     * @param InEvent The event
+     */
+    bool Application::OnWindowClose(WindowCloseEvent& InEvent)
+    {
+        this->bRunning = false;
+        return true;
     }
 
 }
