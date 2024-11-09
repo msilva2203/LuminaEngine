@@ -1,7 +1,7 @@
 #ifndef CORE_KEYEVENTS_H
 #define CORE_KEYEVENTS_H
 
-#pragma oce
+#pragma once
 
 #include "Core/Event.h"
 

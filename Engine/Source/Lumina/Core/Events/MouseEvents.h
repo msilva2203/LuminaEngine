@@ -1,7 +1,7 @@
 #ifndef CORE_MOUSEEVENTS_H
 #define CORE_MOUSEEVENTS_H
 
-#pragma oce
+#pragma once
 
 #include "Core/Event.h"
 

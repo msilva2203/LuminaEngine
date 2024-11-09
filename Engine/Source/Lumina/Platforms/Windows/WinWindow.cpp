@@ -1,6 +1,9 @@
 #include "WinWindow.h"
 
 #include "Core/Log.h"
+#include "Core/Events/ApplicationEvents.h"
+#include "Core/Events/KeyEvents.h"
+#include "Core/Events/MouseEvents.h"
 
 #ifdef LUMINA_PLATFORM_WINDOWS
 
@@ -61,35 +64,45 @@ namespace Lumina {
         // Bind GLFW window callbacks
         glfwSetWindowCloseCallback(WindowHandle, [](GLFWwindow* window)
         {
-            WindowData& WindowUserData = *(WindowData*)glfwGetWindowUserPointer(window);
+            FWindowData& WindowUserData = *(FWindowData*)glfwGetWindowUserPointer(window);
 
+            WindowCloseEvent Event;
+            WindowUserData.Callback(Event);
         });
 
         glfwSetWindowSizeCallback(WindowHandle, [](GLFWwindow* window, int width, int height)
         {
-            WindowData& WindowUserData = *(WindowData*)glfwGetWindowUserPointer(window);
+            FWindowData& WindowUserData = *(FWindowData*)glfwGetWindowUserPointer(window);
 
             WindowUserData.Width = width;
             WindowUserData.Height = height;
             
+            WindowResizeEvent Event(width, height);
+            WindowUserData.Callback(Event);
         });
 
         glfwSetKeyCallback(WindowHandle, [](GLFWwindow* window, int key, int scancode, int action, int mods)
         {
-            WindowData& WindowUserData = *(WindowData*)glfwGetWindowUserPointer(window);
+            FWindowData& WindowUserData = *(FWindowData*)glfwGetWindowUserPointer(window);
 
             switch (action)
             {
                 case GLFW_PRESS:
                 {
+                    KeyPressedEvent Event(key, false);
+                    WindowUserData.Callback(Event);
                     break;
                 }
                 case GLFW_RELEASE:
                 {
+                    KeyReleasedEvent Event(key);
+                    WindowUserData.Callback(Event);
                     break;
                 }
                 case GLFW_REPEAT:
                 {
+                    KeyPressedEvent Event(key, true);
+                    WindowUserData.Callback(Event);
                     break;
                 }
             }
@@ -98,15 +111,19 @@ namespace Lumina {
 
         glfwSetMouseButtonCallback(WindowHandle, [](GLFWwindow* window, int button, int action, int mods)
         {
-            WindowData& WindowUserData = *(WindowData*)glfwGetWindowUserPointer(window);
+            FWindowData& WindowUserData = *(FWindowData*)glfwGetWindowUserPointer(window);
 
             switch (action) {
                 case GLFW_PRESS:
                 {
+                    MouseButtonPressedEvent Event(button);
+                    WindowUserData.Callback(Event);
                     break;
                 }
                 case GLFW_RELEASE:
                 {
+                    MouseButtonReleasedEvent Event(button);
+                    WindowUserData.Callback(Event);
                     break;
                 }
             }
@@ -115,14 +132,18 @@ namespace Lumina {
 
         glfwSetScrollCallback(WindowHandle, [](GLFWwindow* window, double xoffset, double yoffset)
         {
-            WindowData& WindowUserData = *(WindowData*)glfwGetWindowUserPointer(window);
+            FWindowData& WindowUserData = *(FWindowData*)glfwGetWindowUserPointer(window);
 
+            MouseScrolledEvent Event((float32)xoffset, (float32)yoffset);
+            WindowUserData.Callback(Event);
         });
 
         glfwSetCursorPosCallback(WindowHandle, [](GLFWwindow* window, double xpos, double ypos)
         {
-            WindowData& WindowUserData = *(WindowData*)glfwGetWindowUserPointer(window);
+            FWindowData& WindowUserData = *(FWindowData*)glfwGetWindowUserPointer(window);
 
+            MouseMovedEvent Event((float32)xpos, (float32)ypos);
+            WindowUserData.Callback(Event);
         });
 
         LUMINA_CORE_INFO("Window initialized");

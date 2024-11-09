@@ -1,7 +1,7 @@
 #ifndef CORE_APPLICATIONEVENTS_H
 #define CORE_APPLICATIONEVENTS_H
 
-#pragma oce
+#pragma once
 
 #include "Core/Event.h"
 
@@ -38,7 +38,7 @@ namespace Lumina
         virtual std::string ToString() const override
         {
             std::stringstream Stream;
-            Stream << GetName << ": " << GetWidth() << ", " << GetHeight();
+            Stream << GetName() << ": " << GetWidth() << ", " << GetHeight();
             return Stream.str();
         }
 

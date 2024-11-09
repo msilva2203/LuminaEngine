@@ -7,7 +7,9 @@
 
 #include "Core/Core.h"
 
+#include <iostream>
 #include <string>
+#include <functional>
 
 namespace Lumina {
 
@@ -26,7 +28,7 @@ namespace Lumina {
      * Represents the category of an event
      * 
      * Events can be in more than one category, therefore the bit usage
-     * (example: Input | Keyboard)
+     * (example: CategoryInput | CategoryKeyboardEvent)
      */
     enum EEventCategory : uint8
     {
@@ -53,6 +55,11 @@ namespace Lumina {
 
         virtual std::string ToString() const { return GetName(); }
 
+        friend std::ostream& operator<<(std::ostream& Ostream, const Event& InEvent)
+        {
+            return Ostream << InEvent.ToString();
+        }
+
     protected:
 
     private:
@@ -70,15 +77,15 @@ namespace Lumina {
 
     };
 
+    #define DECLARE_EVENT_TYPE(Type) \
+        static EEventType GetStaticEventType() { return EEventType::##Type; } \
+        virtual EEventType GetEventType() const override { return GetStaticEventType(); } \
+        virtual const char* GetName() const override { return #Type; } \
+
+    #define DECLARE_EVENT_CATEGORY(CategoryFlags) \
+        virtual int32 GetEventCategoryFlags() const override { return CategoryFlags; } \
+
 }
-
-#define DECLARE_EVENT_TYPE(Type) \
-    EEventType GetStaticEventType() { return EEventType::##Type; }
-    virtual EEventType GetEventType() const override { return GetStaticEventType(); } \
-    virtual const char* GetName() const override { return #Type; } \
-
-#define DECLARE_EVENT_CATEGORY(CategoryFlags) \
-    virtual int32 GetEventCategoryFlags() const override { return CategoryFlags; } \
 
 #define BIND_EVENT(Function, Object) std::bind(&Function, Object, std::placeholders::_1)
 
