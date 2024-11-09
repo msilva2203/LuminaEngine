@@ -6,6 +6,7 @@
 #include "Core/Core.h"
 #include "Core/Window.h"
 
+#define LUMINA_PLATFORM_WINDOWS
 #ifdef LUMINA_PLATFORM_WINDOWS
 
 #include "GLFW/glfw3.h"
