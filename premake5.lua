@@ -21,6 +21,7 @@ project "Engine"
     location "Engine"
     kind "SharedLib"
     language "C++"
+    staticruntime "Off" -- /MD option equivalent
 
     targetdir ("%{prj.name}/Binaries/" .. outputdir)
     objdir ("%{prj.name}/Intermediate/" .. outputdir)
@@ -41,7 +42,8 @@ project "Engine"
     links
     {
         "glfw",
-        "opengl32.lib"
+        "opengl32.lib",
+        "dwmapi.lib"
     }
 
     defines
@@ -51,7 +53,6 @@ project "Engine"
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime "On"
         systemversion "latest"
 
         defines
@@ -59,12 +60,10 @@ project "Engine"
             "LUMINA_PLATFORM_WINDOWS"
         }
 
-        postbuildcommands
-        {
-            ""
-        }
-
     filter "system:linux"
+        pic "On"
+        systemversion "latest"
+
         defines
         {
             "LUMINA_PLATFORM_LINUX"
@@ -72,49 +71,28 @@ project "Engine"
 
     filter "configurations:Debug"
         defines "LUMINA_DEBUG"
+        runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
         defines "LUMINA_RELEASE"
-        optimize "On"
+        runtime "Release"
+        symbols "On"
+        optimize "Speed"
 
     filter "configurations:Distribution"
         defines "LUMINA_DISTRIBUTION"
-        optimize "On"
+        runtime "Release"
+        symbols "Off"
+        optimize "Speed"
 
-    filter
-    {
-        "system:windows",
-        "configurations:Debug"
-    }
-        buildoptions "/MDd"
-    filter
-    {
-        "system:windows",
-        "configurations:Release"
-    }
-        buildoptions "/MD"
-    filter
-    {
-        "system:windows",
-        "configurations:Distribution"
-    }
-        buildoptions "/MD"
-
-    buildoptions
-    {
-        "/utf-8"
-    }
+    buildoptions "/utf-8"
 
 project "Sandbox"
     location "Sandbox"
     kind "ConsoleApp"
     language "C++"
-
-    links
-    {
-        "Engine"
-    }
+    staticruntime "Off" -- /MD option equivalent
 
     targetdir ("%{prj.name}/Binaries/" .. outputdir)
     objdir ("%{prj.name}/Intermediate/" .. outputdir)
@@ -129,13 +107,16 @@ project "Sandbox"
     {
         "%{prj.name}/Source/",
         "Engine/Source/Lumina/",
-        "Engine/Source/ThirdParty/spdlog/include",
-        "%{include_dirs.glfw}"
+        "Engine/Source/ThirdParty/spdlog/include"
+    }
+
+    links
+    {
+        "Engine"
     }
 
     filter "system:windows"
         cppdialect "C++17"
-        staticruntime "On"
         systemversion "latest"
 
         defines
@@ -144,6 +125,9 @@ project "Sandbox"
         }
 
     filter "system:linux"
+        pic "On"
+        systemversion "latest"
+
         defines
         {
             "LUMINA_PLATFORM_LINUX"
@@ -151,36 +135,19 @@ project "Sandbox"
 
     filter "configurations:Debug"
         defines "LUMINA_DEBUG"
+        runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
         defines "LUMINA_RELEASE"
+        runtime "Release"
+        symbols "On"
         optimize "On"
 
     filter "configurations:Distribution"
         defines "LUMINA_DISTRIBUTION"
+        runtime "Release"
+        symbols "Off"
         optimize "On"
 
-    filter
-    {
-        "system:windows",
-        "configurations:Debug"
-    }
-        buildoptions "/MDd"
-    filter
-    {
-        "system:windows",
-        "configurations:Release"
-    }
-        buildoptions "/MD"
-    filter
-    {
-        "system:windows",
-        "configurations:Distribution"
-    }
-        buildoptions "/MD"
-
-    buildoptions
-    {
-        "/utf-8"
-    }
+    buildoptions "/utf-8"

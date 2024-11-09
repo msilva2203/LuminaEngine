@@ -19,7 +19,7 @@ public:
         //LUMINA_INFO("MyLayer::OnUpdate({0})", DeltaTime);
         //LUMINA_ASSERT((1 > 3), "1 is not greater than 3!");
 
-        LUMINA_ASSERT(1 == 3, "1 is not equal to 3");
+        //LUMINA_ASSERT(1 == 3, "1 is not equal to 3");
     }
 
 private:

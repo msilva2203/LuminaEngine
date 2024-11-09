@@ -34,8 +34,8 @@
     #endif
 
     // Defines DEBUGBREAK for later assertion macros
-    #include <signal>
-    #define DEBUGBREAK() raise(SIGTRAP)
+    //#include <signal>
+    //#define DEBUGBREAK() raise(SIGTRAP)
 #else
 
 // Unsupported platform
