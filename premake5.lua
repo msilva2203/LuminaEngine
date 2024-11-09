@@ -61,7 +61,6 @@ project "Engine"
         links
         {
             "opengl32.lib"
-            --"dwmapi.lib"
         }
 
     filter "system:linux"

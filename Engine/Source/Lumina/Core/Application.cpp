@@ -47,6 +47,7 @@ namespace Lumina {
         WindowSettings.Height = 720;
         WindowSettings.bVSyncEnabled = false;
         AppWindow = Window::Create(WindowSettings);
+        AppWindow->SetEventCallback(BIND_EVENT(&Application::OnEvent, this));
 
         this->bRunning = true;
         this->LastFrameTime = 0.0f;
@@ -76,11 +77,26 @@ namespace Lumina {
             glClear(GL_COLOR_BUFFER_BIT);
             glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 
+            glBegin(GL_TRIANGLES);
+            glVertex2f(-0.50f, -0.50f);
+            glVertex2f( 0.50f, -0.50f);
+            glVertex2f( 0.00f,  0.50f);
+            glEnd();
+
             // Update window
             this->AppWindow->OnUpdate();
 
             this->LastFrameTime = CurrentTime;
         }
+    }
+
+    /**
+     * Handles events received from various sources
+     * @param ReceivedEvent The event received
+     */
+    void Application::OnEvent(Event& ReceivedEvent)
+    {
+        
     }
 
     /**

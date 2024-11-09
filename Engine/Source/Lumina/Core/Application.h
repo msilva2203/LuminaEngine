@@ -25,6 +25,7 @@ namespace Lumina {
 
         void OnInit();
         void Run();
+        void OnEvent(Event& ReceivedEvent);
 
         void PushLayer(Layer* InLayer);
         void PopLayer(Layer* InLayer);

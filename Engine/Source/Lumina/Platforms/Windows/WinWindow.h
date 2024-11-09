@@ -6,7 +6,7 @@
 #include "Core/Core.h"
 #include "Core/Window.h"
 
-//#define LUMINA_PLATFORM_WINDOWS
+#define LUMINA_PLATFORM_WINDOWS
 #ifdef LUMINA_PLATFORM_WINDOWS
 
 #include "GLFW/glfw3.h"
@@ -18,6 +18,8 @@ namespace Lumina {
         std::string Title;
         int32 Width, Height;
         bool bVSyncEnabled;
+
+        Window::EventCallback Callback;
     };
 
     class LUMINA_API WinWindow : public Window
@@ -33,12 +35,13 @@ namespace Lumina {
         virtual inline int32 GetWidth() const override { return WindowData.Width; }
         virtual inline int32 GetHeight() const override { return WindowData.Height; }
 
+        virtual inline void SetEventCallback(const EventCallback& Callback) override { WindowData.Callback = Callback; }
         virtual void SetVSync(const bool bNewValue) override;
         virtual bool IsVSyncEnabled() const override { return WindowData.bVSyncEnabled; }
 
     private:
         FWindowData WindowData;
-        GLFWwindow* WindowPtr;
+        GLFWwindow* WindowHandle;
 
     };
 

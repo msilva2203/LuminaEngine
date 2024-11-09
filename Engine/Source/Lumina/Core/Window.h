@@ -4,6 +4,7 @@
 #pragma once
 
 #include "Core/Core.h"
+#include "Core/Event.h"
 
 #include <string>
 
@@ -41,6 +42,8 @@ namespace Lumina {
     class LUMINA_API Window
     {
     public:
+        using EventCallback = std::function<void(Event&)>;
+
         Window() {}
         virtual ~Window() {}
 
@@ -49,6 +52,7 @@ namespace Lumina {
         virtual inline int32 GetWidth() const = 0;
         virtual inline int32 GetHeight() const = 0;
 
+        virtual void SetEventCallback(const EventCallback& Callback) = 0;
         virtual void SetVSync(const bool bNewValue) = 0;
         virtual bool IsVSyncEnabled() const = 0;
 

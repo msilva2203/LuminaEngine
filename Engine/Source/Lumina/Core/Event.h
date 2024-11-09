@@ -23,6 +23,8 @@ namespace Lumina {
     };
 
     /**
+     * Represents the category of an event
+     * 
      * Events can be in more than one category, therefore the bit usage
      * (example: Input | Keyboard)
      */
@@ -67,5 +69,7 @@ namespace Lumina {
     };
 
 }
+
+#define BIND_EVENT(Function, Object) std::bind(&Function, Object, std::placeholders::_1)
 
 #endif /* CORE_EVENT_H */
