@@ -17,6 +17,8 @@ namespace Lumina {
         std::string Title;
         int32 Width, Height;
         bool bVSyncEnabled;
+
+        Window::EventCallback Callback;
     };
 
     class LUMINA_API LinuxWindow : public Window
@@ -32,12 +34,13 @@ namespace Lumina {
         virtual inline int32 GetWidth() const override { return WindowData.Width; }
         virtual inline int32 GetHeight() const override { return WindowData.Height; }
 
+        virtual inline void SetEventCallback(const EventCallback& Callback) override { WindowData.Callback = Callback; }
         virtual void SetVSync(const bool bNewValue) override;
         virtual bool IsVSyncEnabled() const override { return WindowData.bVSyncEnabled; }
 
     private:
         FWindowData WindowData;
-        GLFWwindow* WindowPtr;
+        GLFWwindow* WindowHandle;
     };
 
 }

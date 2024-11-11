@@ -1,6 +1,9 @@
 #include "LinuxWindow.h"
 
 #include "Core/Log.h"
+#include "Core/Events/ApplicationEvents.h"
+#include "Core/Events/KeyEvents.h"
+#include "Core/Events/MouseEvents.h"
 
 #ifdef LUMINA_PLATFORM_LINUX
 
@@ -8,6 +11,14 @@ namespace Lumina {
 
     // GLFW window instances
     static int32 WindowInstances = 0;
+
+    /**
+     * Serves as the callback function for glfw errors
+     */
+    static void ErrorCallback(int Error, const char* Description)
+    {
+        LUMINA_CORE_ERROR("GLFW error ({0}): {1}", Error, Description);
+    }
 
     Window* Window::Create(const FWindowSettings& WindowSettings)
     {
@@ -37,24 +48,110 @@ namespace Lumina {
         if (WindowInstances <= 0) {
             int32 Success = glfwInit();
             LUMINA_CORE_ASSERT(Success == GLFW_TRUE, "GLFW failed to initialize");
+            glfwSetErrorCallback(ErrorCallback);
             WindowInstances = 1;
         } else {
             WindowInstances++;
         }
 
         // Creation of the actual window
-        WindowPtr = glfwCreateWindow(WindowData.Width, WindowData.Height, WindowData.Title.c_str(), NULL, NULL);
-        LUMINA_CORE_ASSERT(WindowPtr != nullptr, "Failed to create window");
+        WindowHandle = glfwCreateWindow(WindowData.Width, WindowData.Height, WindowData.Title.c_str(), NULL, NULL);
+        LUMINA_CORE_ASSERT(WindowHandle != nullptr, "Failed to create window");
 
-        glfwMakeContextCurrent(WindowPtr);
-        glfwSetWindowUserPointer(WindowPtr, &WindowData);
+        glfwMakeContextCurrent(WindowHandle);
+        glfwSetWindowUserPointer(WindowHandle, &WindowData);
+
+        // Bind GLFW window callbacks
+        glfwSetWindowCloseCallback(WindowHandle, [](GLFWwindow* window)
+        {
+            FWindowData& WindowUserData = *(FWindowData*)glfwGetWindowUserPointer(window);
+
+            WindowCloseEvent Event;
+            WindowUserData.Callback(Event);
+        });
+
+        glfwSetWindowSizeCallback(WindowHandle, [](GLFWwindow* window, int width, int height)
+        {
+            FWindowData& WindowUserData = *(FWindowData*)glfwGetWindowUserPointer(window);
+
+            WindowUserData.Width = width;
+            WindowUserData.Height = height;
+            
+            WindowResizeEvent Event(width, height);
+            WindowUserData.Callback(Event);
+        });
+
+        glfwSetKeyCallback(WindowHandle, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+        {
+            FWindowData& WindowUserData = *(FWindowData*)glfwGetWindowUserPointer(window);
+
+            switch (action)
+            {
+                case GLFW_PRESS:
+                {
+                    KeyPressedEvent Event(key, false);
+                    WindowUserData.Callback(Event);
+                    break;
+                }
+                case GLFW_RELEASE:
+                {
+                    KeyReleasedEvent Event(key);
+                    WindowUserData.Callback(Event);
+                    break;
+                }
+                case GLFW_REPEAT:
+                {
+                    KeyPressedEvent Event(key, true);
+                    WindowUserData.Callback(Event);
+                    break;
+                }
+            }
+
+        });
+
+        glfwSetMouseButtonCallback(WindowHandle, [](GLFWwindow* window, int button, int action, int mods)
+        {
+            FWindowData& WindowUserData = *(FWindowData*)glfwGetWindowUserPointer(window);
+
+            switch (action) {
+                case GLFW_PRESS:
+                {
+                    MouseButtonPressedEvent Event(button);
+                    WindowUserData.Callback(Event);
+                    break;
+                }
+                case GLFW_RELEASE:
+                {
+                    MouseButtonReleasedEvent Event(button);
+                    WindowUserData.Callback(Event);
+                    break;
+                }
+            }
+
+        });
+
+        glfwSetScrollCallback(WindowHandle, [](GLFWwindow* window, double xoffset, double yoffset)
+        {
+            FWindowData& WindowUserData = *(FWindowData*)glfwGetWindowUserPointer(window);
+
+            MouseScrolledEvent Event((float32)xoffset, (float32)yoffset);
+            WindowUserData.Callback(Event);
+        });
+
+        glfwSetCursorPosCallback(WindowHandle, [](GLFWwindow* window, double xpos, double ypos)
+        {
+            FWindowData& WindowUserData = *(FWindowData*)glfwGetWindowUserPointer(window);
+
+            MouseMovedEvent Event((float32)xpos, (float32)ypos);
+            WindowUserData.Callback(Event);
+        });
 
         LUMINA_CORE_INFO("Window initialized");
     }
 
     void LinuxWindow::Shutdown()
     {
-        glfwDestroyWindow(WindowPtr);
+        glfwDestroyWindow(WindowHandle);
         WindowInstances--;
 
         if (WindowInstances <= 0) {
@@ -65,7 +162,7 @@ namespace Lumina {
 
     void LinuxWindow::OnUpdate()
     {
-        glfwSwapBuffers(WindowPtr);
+        glfwSwapBuffers(WindowHandle);
         glfwPollEvents();
     }
 

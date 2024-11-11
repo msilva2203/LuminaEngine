@@ -42,7 +42,7 @@ namespace Lumina
             std::stringstream Stream;
             Stream << GetName() << ": " << GetKeyCode();
             if (IsRepeat()) {
-                Stream << "(Repeat)";
+                Stream << " (Repeat)";
             }
             return Stream.str();
         }

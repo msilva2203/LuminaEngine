@@ -42,7 +42,7 @@ namespace Lumina {
 
         // Creates a window
         FWindowSettings WindowSettings;
-        WindowSettings.Title = "Lumina Window";
+        WindowSettings.Title = "Lumina Engine";
         WindowSettings.Width = 1280;
         WindowSettings.Height = 720;
         WindowSettings.bVSyncEnabled = false;
@@ -77,11 +77,12 @@ namespace Lumina {
             glClear(GL_COLOR_BUFFER_BIT);
             glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 
-            glBegin(GL_TRIANGLES);
-            glVertex2f(-0.50f, -0.50f);
-            glVertex2f( 0.50f, -0.50f);
-            glVertex2f( 0.00f,  0.50f);
-            glEnd();
+            // Crashing on linux
+            //glBegin(GL_TRIANGLES);
+            //glVertex2f(-0.50f, -0.50f);
+            //glVertex2f( 0.50f, -0.50f);
+            //glVertex2f( 0.00f,  0.50f);
+            //glEnd();
 
             // Update window
             this->AppWindow->OnUpdate();

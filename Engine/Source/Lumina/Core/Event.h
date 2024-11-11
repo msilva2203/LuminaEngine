@@ -93,7 +93,7 @@ namespace Lumina {
     };
 
     #define DECLARE_EVENT_TYPE(Type) \
-        static EEventType GetStaticEventType() { return EEventType::##Type; } \
+        static EEventType GetStaticEventType() { return EEventType::Type; } \
         virtual EEventType GetEventType() const override { return GetStaticEventType(); } \
         virtual const char* GetName() const override { return #Type; } \
 
