@@ -4,14 +4,22 @@
 
 #include "Core/Log.h"
 #include "Core/Time.h"
+#include "Core/Profiler.h"
 
 namespace Lumina {
 
+    static bool bInitialized = false;
+
     void Core::Init()
     {
+        LUMINA_CORE_ASSERT(!bInitialized, "Core has already been initialized");
+        
         // Initialization of every core system
         Lumina::Log::Init();
         Lumina::Time::Init();
+        Lumina::Profiler::Init();
+
+        bInitialized = true;
     }
 
 }
