@@ -6,9 +6,12 @@
 #include "Core/Core.h"
 #include "Utility/Types.h"
 
-#include <string>
+#include <filesystem>
 
 namespace Lumina {
+
+    // TODO: Replace with an unique uniform id generated per asset
+    using AssetHandle = uint64;
 
     /**
      * Abstract class of an asset
@@ -16,9 +19,6 @@ namespace Lumina {
     class LUMINA_API Asset
     {
     public:
-
-        // TODO: Replace with an unique uniform id generated per asset
-        using AssetHandle = uint64;
 
         /**
          * Represents the type of the asset
@@ -36,12 +36,13 @@ namespace Lumina {
 
         /**
          * Structure of properties representing the metadata of an asset
-         * Used primarily for debug purposes and should probably be stripped from distribution 
+         * Used primarily for debug purposes (editor) and should probably be stripped from distribution 
          */
         struct Metadata
         {
+            AssetHandle Handle;
             Asset::EType Type;
-            std::string FilePath; 
+            std::filesystem::path FilePath; 
         };
 
         // To be defined per asset using DECLARE_ASSET macro
@@ -50,10 +51,12 @@ namespace Lumina {
         AssetHandle GetAssetHandle() const { return this->Handle; }
 
     private:
+        // Should be automatically generated
         AssetHandle Handle;
 
     };
 
+    // Used to automatically implement necessary definitions in future assets
     #define DECLARE_ASSET(Type) \
         static Asset::EType GetStaticAssetType() { return Asset::EType::Type; } \
         virtual Asset::EType GetAssetType() const override { return GetStaticAssetType(); } \

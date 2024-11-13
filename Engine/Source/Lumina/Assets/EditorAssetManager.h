@@ -4,15 +4,23 @@
 #pragma once
 
 #include "Assets/AssetManager.h"
+#include "Assets/AssetRegistry.h"
 
 namespace Lumina {
 
+    /**
+     * Specialization of the asset manager to be used only in the editor
+     */
     class LUMINA_API EditorAssetManager : public AssetManager
     {
     public:
+        virtual TRef<Asset> GetAsset(AssetHandle Handle) const override;
+        virtual bool IsAssetHandleValid(AssetHandle Handle) const override;
+        virtual bool IsAssetLoaded(AssetHandle Handle) const override;
 
     private:
-
+        // The editor asset manager contains an asset registry, keeping all metadata available
+        AssetRegistry Registry;
     };
 
 }
