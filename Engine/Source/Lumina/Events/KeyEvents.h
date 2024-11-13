@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "Core/Event.h"
+#include "Events/Event.h"
 
 #include <sstream>
 

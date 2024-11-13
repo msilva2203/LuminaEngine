@@ -3,7 +3,7 @@
 #include "Core/Core.h"
 
 #include "Core/Log.h"
-#include "Core/Time.h"
+#include "Utility/Time.h"
 #include "Core/Profiler.h"
 
 namespace Lumina {

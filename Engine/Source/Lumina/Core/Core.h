@@ -5,8 +5,6 @@
 
 #pragma once
 
-#include "Types.h" // To be included in every file
-
 /*------------------------------------------------
     Windows
 -------------------------------------------------*/
@@ -71,6 +69,11 @@
     #define LUMINA_CORE_ASSERT(x, ...)
     #define LUMINA_ASSERT(x, ...)
 #endif
+
+// To be included in every file
+#include "Utility/Types.h" 
+#include "Utility/Array.h"
+#include "Utility/String.h"
 
 namespace Lumina {
 

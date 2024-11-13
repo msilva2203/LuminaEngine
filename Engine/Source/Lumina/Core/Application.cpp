@@ -3,7 +3,7 @@
 #include "Application.h"
 
 #include "Core/Log.h"
-#include "Core/Time.h"
+#include "Utility/Time.h"
 
 #include "GLFW/glfw3.h"
 
@@ -46,8 +46,8 @@ namespace Lumina {
         WindowSettings.Width = 1280;
         WindowSettings.Height = 720;
         WindowSettings.bVSyncEnabled = false;
-        AppWindow = Window::Create(WindowSettings);
-        AppWindow->SetEventCallback(BIND_EVENT(Application::OnEvent, this));
+        this->AppWindow = Window::Create(WindowSettings);
+        this->AppWindow->SetEventCallback(BIND_EVENT(Application::OnEvent, this));
 
         this->bRunning = true;
         this->LastFrameTime = 0.0f;
@@ -97,6 +97,7 @@ namespace Lumina {
      */
     void Application::OnEvent(Event& InEvent)
     {
+        // TODO: Propagate events to layers
         LUMINA_CORE_TRACE("{0}", InEvent.ToString());
 
         EventDispatcher Dispatcher(InEvent);

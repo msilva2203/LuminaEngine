@@ -8,9 +8,9 @@
 #include "Core/Core.h"
 #include "Core/LayerStack.h"
 #include "Core/Window.h"
-#include "Core/Events/ApplicationEvents.h"
-#include "Core/Events/KeyEvents.h"
-#include "Core/Events/MouseEvents.h"
+#include "Events/ApplicationEvents.h"
+#include "Events/KeyEvents.h"
+#include "Events/MouseEvents.h"
 
 namespace Lumina {
 
@@ -34,8 +34,6 @@ namespace Lumina {
         void PopLayer(Layer* InLayer);
 
         static Application* GetInstance();
-
-        static Application* Instance;
     
     protected:
     
@@ -47,6 +45,7 @@ namespace Lumina {
         LayerStack MainLayerStack;
         Window* AppWindow;
     
+        static Application* Instance;
     };
 
     // To be defined in the Sandbox application

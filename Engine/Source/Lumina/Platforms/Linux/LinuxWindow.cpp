@@ -1,9 +1,9 @@
 #include "LinuxWindow.h"
 
 #include "Core/Log.h"
-#include "Core/Events/ApplicationEvents.h"
-#include "Core/Events/KeyEvents.h"
-#include "Core/Events/MouseEvents.h"
+#include "Events/ApplicationEvents.h"
+#include "Events/KeyEvents.h"
+#include "Events/MouseEvents.h"
 
 #ifdef LUMINA_PLATFORM_LINUX
 
