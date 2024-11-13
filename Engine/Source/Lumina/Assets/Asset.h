@@ -36,13 +36,16 @@ namespace Lumina {
 
         /**
          * Structure of properties representing the metadata of an asset
-         * Used primarily for debug purposes (editor) and should probably be stripped from distribution 
+         * Used primarily for debug purposes (editor) and should probably be stripped from distribution
          */
         struct Metadata
         {
             AssetHandle Handle;
-            Asset::EType Type;
+            Asset::EType Type = Asset::EType::None;
             std::filesystem::path FilePath; 
+
+            bool IsValid() const { return this->Type != Asset::EType::None; }
+            operator bool() { return IsValid(); }
         };
 
         // To be defined per asset using DECLARE_ASSET macro

@@ -46,4 +46,22 @@ namespace Lumina {
         return (LoadedAssets.find(Handle) != LoadedAssets.end());
     }
 
+    /**
+     * Get metadata from an asset
+     * @param Handle The handle of the asset
+     * @returns The metadata of the asset, of asset type None if asset is not found
+     */
+    const Asset::Metadata& EditorAssetManager::GetAssetMetadata(AssetHandle Handle) const
+    {
+        // Static initialization of empty metadata
+        static Asset::Metadata EmptyMetadata;
+
+        auto& RegistryMap = Registry.GetRegistry();
+        auto Iterator = RegistryMap.find(Handle);
+        if (Iterator == RegistryMap.end()) {
+            return EmptyMetadata;
+        }
+        return Iterator->second;
+    }
+
 }

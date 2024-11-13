@@ -18,6 +18,8 @@ namespace Lumina {
         virtual bool IsAssetHandleValid(AssetHandle Handle) const override;
         virtual bool IsAssetLoaded(AssetHandle Handle) const override;
 
+        const Asset::Metadata& GetAssetMetadata(AssetHandle Handle) const;
+
     private:
         // The editor asset manager contains an asset registry, keeping all metadata available
         AssetRegistry Registry;

@@ -30,6 +30,9 @@ namespace Lumina {
         ConstIterator begin() const { return this->Registry.cbegin(); }
         ConstIterator end() const { return this->Registry.cend(); }
 
+        std::unordered_map<AssetHandle, Asset::Metadata>& GetRegistry() { return this->Registry; }
+        const std::unordered_map<AssetHandle, Asset::Metadata>& GetRegistry() const { return this->Registry; }
+
     private:
         std::unordered_map<AssetHandle, Asset::Metadata> Registry;
     };
