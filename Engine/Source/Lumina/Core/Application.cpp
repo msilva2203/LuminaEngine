@@ -17,6 +17,7 @@ namespace Lumina {
      */
     Application::Application() :
         bRunning(false),
+        AppTime(Time()),
         LastFrameTime(0.0f),
         MainLayerStack(LayerStack()),
         AppWindow(nullptr)
@@ -64,7 +65,7 @@ namespace Lumina {
 
         while (bRunning)
         {
-            float32 CurrentTime = Time::GetElapsedSeconds();
+            float32 CurrentTime = this->AppTime.GetElapsedSeconds();
             float32 DeltaTime = CurrentTime - this->LastFrameTime;
 
             // Update layers in layer stack

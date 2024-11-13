@@ -3,7 +3,6 @@
 #include "Core/Core.h"
 
 #include "Core/Log.h"
-#include "Utility/Time.h"
 #include "Core/Profiler.h"
 
 namespace Lumina {
@@ -16,7 +15,6 @@ namespace Lumina {
         
         // Initialization of every core system
         Lumina::Log::Init();
-        Lumina::Time::Init();
         Lumina::Profiler::Init();
 
         bInitialized = true;

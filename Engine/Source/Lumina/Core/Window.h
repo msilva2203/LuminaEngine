@@ -4,7 +4,7 @@
 #pragma once
 
 #include "Core/Core.h"
-#include "Core/Event.h"
+#include "Events/Event.h"
 
 #include <string>
 

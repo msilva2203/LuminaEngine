@@ -11,6 +11,7 @@
 #include "Events/ApplicationEvents.h"
 #include "Events/KeyEvents.h"
 #include "Events/MouseEvents.h"
+#include "Utility/Time.h"
 
 namespace Lumina {
 
@@ -41,6 +42,7 @@ namespace Lumina {
         bool OnWindowClose(WindowCloseEvent& InEvent);
 
         bool bRunning;
+        Time AppTime;
         float32 LastFrameTime;
         LayerStack MainLayerStack;
         Window* AppWindow;

@@ -17,16 +17,16 @@ namespace Lumina {
     class LUMINA_API Time
     {
     public:
-        Time() = delete;
+        Time();
+        ~Time() {}
 
-        static void Init();
-        static float32 GetElapsedSeconds();
+        float32 GetElapsedSeconds();
         static void Sleep(float32 Duration);
 
     protected:
 
     private:
-        static std::chrono::steady_clock::time_point StartTimePoint;
+        std::chrono::steady_clock::time_point StartTimePoint;
 
     };
 

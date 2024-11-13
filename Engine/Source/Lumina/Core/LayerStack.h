@@ -7,7 +7,7 @@
 
 #include "Core/Core.h"
 #include "Core/Layer.h"
-#include "Core/Array.h"
+#include "Utility/Array.h"
 
 namespace Lumina {
 
