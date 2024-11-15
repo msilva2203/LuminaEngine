@@ -1,3 +1,8 @@
+// This code is part of the Lumina Engine and is licensed under MIT License
+
+#ifndef CORE_TYPES_H
+#define CORE_TYPES_H
+
 #pragma once
 
 // Integer types
@@ -14,3 +19,5 @@ typedef unsigned long long int      uint64;
 typedef float                       float32;
 typedef double                      float64;
 typedef long double                 float128;   
+
+#endif /* CORE_TYPES_H */

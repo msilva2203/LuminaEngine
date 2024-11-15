@@ -1,15 +1,15 @@
 // This code is part of the Lumina Engine and is licensed under MIT License
 
-#include "Layer.h"
+#include "Object.h"
 
 namespace Lumina {
 
-    Layer::Layer(const std::string& DebugName) :
-        Object(DebugName)
+    Object::Object(const std::string& DebugName) :
+        DebugName(DebugName)
     {
     }
 
-    Layer::~Layer()
+    Object::~Object()
     {
     }
 

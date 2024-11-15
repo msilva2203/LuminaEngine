@@ -522,3 +522,6 @@ FodyWeavers.xsd
 ### Intermediate files (?)
 *.recipe
 *.FileListAbsolute.txt
+
+bin/
+obj/

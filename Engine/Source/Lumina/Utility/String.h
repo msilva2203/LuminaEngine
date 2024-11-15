@@ -1,7 +1,9 @@
+// This code is part of the Lumina Engine and is licensed under MIT License
+
 #ifndef CORE_STRING_H
 #define CORE_STRING_H
 
-#include "Core.h"
+#include "Core/Core.h"
 
 namespace Lumina {
 
