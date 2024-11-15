@@ -48,6 +48,8 @@ namespace Lumina {
         Window* AppWindow;
     
         static Application* Instance;
+
+        uint32 VertexArray, VertexBuffer, IndexBuffer;
     };
 
     // To be defined in the Sandbox application

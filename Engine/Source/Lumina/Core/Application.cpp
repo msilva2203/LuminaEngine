@@ -5,6 +5,7 @@
 #include "Core/Log.h"
 #include "Utility/Time.h"
 
+#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
 namespace Lumina {
@@ -43,7 +44,7 @@ namespace Lumina {
 
         // Creates a window
         FWindowSettings WindowSettings;
-        WindowSettings.Title = "Lumina Engine";
+        WindowSettings.Title = "Lumina Window";
         WindowSettings.Width = 1280;
         WindowSettings.Height = 720;
         WindowSettings.bVSyncEnabled = false;
@@ -54,6 +55,35 @@ namespace Lumina {
         this->LastFrameTime = 0.0f;
 
         LUMINA_CORE_INFO("Application initialized");
+
+        /**
+         * OpenGL triangle
+         */
+        glGenBuffers(1, &VertexArray);
+        glBindVertexArray(VertexArray);
+
+        glGenBuffers(1, &VertexBuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer);
+
+        float32 Triangle[3 * 3] = {
+            -0.5f, -0.5f, 0.0f,
+             0.5f, -0.5f, 0.0f,
+             0.0f,  0.5f, 0.0f
+        };
+
+        glBufferData(GL_ARRAY_BUFFER, sizeof(Triangle), Triangle, GL_STATIC_DRAW);
+
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float32), nullptr);
+
+        glGenBuffers(1, &IndexBuffer);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBuffer);
+
+        uint32 TriangleIndices[3] = {
+            0, 1, 2
+        };
+
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(TriangleIndices), TriangleIndices, GL_STATIC_DRAW);
     }
 
     /**
@@ -68,22 +98,18 @@ namespace Lumina {
             float32 CurrentTime = this->AppTime.GetElapsedSeconds();
             float32 DeltaTime = CurrentTime - this->LastFrameTime;
 
+            // Rendering
+            glClear(GL_COLOR_BUFFER_BIT);
+            glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+
+            glBindVertexArray(VertexArray);
+            glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+
             // Update layers in layer stack
             for (auto& CurrentLayer : this->MainLayerStack)
             {
                 CurrentLayer->OnUpdate(DeltaTime);
             }
-
-            // Rendering
-            glClear(GL_COLOR_BUFFER_BIT);
-            glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
-
-            // Crashing on linux
-            //glBegin(GL_TRIANGLES);
-            //glVertex2f(-0.50f, -0.50f);
-            //glVertex2f( 0.50f, -0.50f);
-            //glVertex2f( 0.00f,  0.50f);
-            //glEnd();
 
             // Update window
             this->AppWindow->OnUpdate();

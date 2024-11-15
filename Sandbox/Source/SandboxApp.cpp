@@ -1,5 +1,6 @@
 #include "Lumina.h"
-#include "Core/Array.h"
+
+#include "Utility/Array.h"
 
 using namespace Lumina;
 
