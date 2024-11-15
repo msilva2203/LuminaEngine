@@ -5,6 +5,8 @@
 #include "Events/KeyEvents.h"
 #include "Events/MouseEvents.h"
 
+#include "Platforms/OpenGL/OpenGLContext.h"
+
 #ifdef LUMINA_PLATFORM_WINDOWS
 
 namespace Lumina {
@@ -58,9 +60,10 @@ namespace Lumina {
         WindowHandle = glfwCreateWindow(WindowData.Width, WindowData.Height, WindowData.Title.c_str(), NULL, NULL);
         LUMINA_CORE_ASSERT(WindowHandle != nullptr, "Failed to create window");
 
-        glfwMakeContextCurrent(WindowHandle);
-        int GladStatus = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        LUMINA_ASSERT(GladStatus, "Failed to initialize glad");
+        // Create rendering context
+        Context = new OpenGLContext(WindowHandle);
+        Context->Init();
+
         glfwSetWindowUserPointer(WindowHandle, &WindowData);
 
         // Bind GLFW window callbacks
@@ -164,8 +167,8 @@ namespace Lumina {
 
     void WinWindow::OnUpdate()
     {
-        glfwSwapBuffers(WindowHandle);
         glfwPollEvents();
+        Context->SwapBuffers();
     }
 
     void WinWindow::SetVSync(const bool bNewValue)

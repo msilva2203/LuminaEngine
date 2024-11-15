@@ -5,22 +5,13 @@
 
 #include "Core/Core.h"
 #include "Core/Window.h"
+#include "Renderer/RenderingContext.h"
 
 #ifdef LUMINA_PLATFORM_WINDOWS
 
-#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
 namespace Lumina {
-
-    struct FWindowData
-    {
-        std::string Title;
-        int32 Width, Height;
-        bool bVSyncEnabled;
-
-        Window::EventCallback Callback;
-    };
 
     class LUMINA_API WinWindow : public Window
     {
@@ -40,8 +31,22 @@ namespace Lumina {
         virtual bool IsVSyncEnabled() const override { return WindowData.bVSyncEnabled; }
 
     private:
+
+        /**
+         * Holds data specific to the platform
+         */
+        struct FWindowData
+        {
+            std::string Title;
+            int32 Width, Height;
+            bool bVSyncEnabled;
+
+            Window::EventCallback Callback;
+        };
+
         FWindowData WindowData;
         GLFWwindow* WindowHandle;
+        RenderingContext* Context;
 
     };
 
