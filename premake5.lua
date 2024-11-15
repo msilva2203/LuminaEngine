@@ -13,9 +13,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- include directories
 include_dirs = {}
 include_dirs["glfw"] = "Engine/Source/ThirdParty/glfw/include"
+include_dirs["glad"] = "Engine/Source/ThirdParty/glad/include"
 
 -- premake includes
 include "Engine/Source/ThirdParty/glfw"
+include "Engine/Source/ThirdParty/glad"
 
 project "Engine"
     location "Engine"
@@ -37,7 +39,8 @@ project "Engine"
     {
         "%{prj.name}/Source/Lumina/",
         "%{prj.name}/Source/ThirdParty/spdlog/include/",
-        "%{include_dirs.glfw}"
+        "%{include_dirs.glfw}",
+        "%{include_dirs.glad}"
     }
 
     defines
@@ -124,7 +127,8 @@ project "Sandbox"
         "%{prj.name}/Source/",
         "Engine/Source/Lumina/",
         "Engine/Source/ThirdParty/spdlog/include/",
-        "%{include_dirs.glfw}"
+        "%{include_dirs.glfw}",
+        "%{include_dirs.glad}"
     }
 
     links
