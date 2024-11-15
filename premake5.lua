@@ -50,7 +50,8 @@ project "Engine"
 
     links
     {
-        "glfw"
+        "glfw",
+        "glad"
     }
 
     filter "system:windows"

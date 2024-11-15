@@ -59,6 +59,8 @@ namespace Lumina {
         LUMINA_CORE_ASSERT(WindowHandle != nullptr, "Failed to create window");
 
         glfwMakeContextCurrent(WindowHandle);
+        int GladStatus = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        LUMINA_ASSERT(GladStatus, "Failed to initialize glad");
         glfwSetWindowUserPointer(WindowHandle, &WindowData);
 
         // Bind GLFW window callbacks

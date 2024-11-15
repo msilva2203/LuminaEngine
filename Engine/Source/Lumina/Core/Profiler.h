@@ -14,7 +14,7 @@ namespace Lumina {
 
     private:
         Profiler();
-    }
+    };
 
 }
 

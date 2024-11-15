@@ -8,6 +8,7 @@
 
 #ifdef LUMINA_PLATFORM_WINDOWS
 
+#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
 namespace Lumina {

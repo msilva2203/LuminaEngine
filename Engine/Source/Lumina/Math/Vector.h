@@ -1,6 +1,9 @@
+#ifndef LUMINA_VECTOR_H
+#define LUMINA_VECTOR_H
+
 #pragma once
 
-#include "Core/Types.h"
+#include "Utility/Types.h"
 
 template<typename T>
 class TVector
@@ -28,3 +31,5 @@ class TVector2D
 
 using FVector = TVector<float32>;
 using FVector2D = TVector2D<float32>;
+
+#endif /* LUMINA_VECTOR_H */
